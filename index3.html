@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manifest Global · Career Leveling Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bk:#000;--dk:#202020;--md:#767676;--lt:#F5F5F5;--wh:#fff;--bd:rgba(0,0,0,0.1);--bs:rgba(0,0,0,0.22);--r:8px;--rs:4px;--gn:#1a7a4a;--gnl:#e6f4ec;--am:#8a6d00;--aml:#fff8e1;--rd:#c0392b;--rdl:#fdf0ee}
+body{font-family:'Inter',sans-serif;background:var(--wh);color:var(--bk);font-size:14px;line-height:1.6;min-height:100vh}
+#gate{position:fixed;inset:0;background:var(--bk);display:flex;align-items:center;justify-content:center;z-index:1000;flex-direction:column;gap:28px}
+#gate img{width:130px;filter:invert(1);opacity:.9}
+#gbox{background:var(--wh);padding:36px;width:100%;max-width:360px;border-radius:var(--r)}
+#gbox h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:6px}
+#gbox p{font-size:13px;color:var(--md);margin-bottom:20px}
+#gbox input[type=password]{width:100%;padding:11px 13px;border:1px solid var(--bs);border-radius:var(--rs);font-size:14px;font-family:'Inter',sans-serif;margin-bottom:10px;outline:none;transition:border-color .15s}
+#gbox input[type=password]:focus{border-color:var(--bk)}
+#gbox button{width:100%;padding:11px;background:var(--bk);color:var(--wh);border:none;border-radius:var(--rs);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer}
+#gbox button:hover{background:var(--dk)}
+#gerr{font-size:12px;color:#cc0000;margin-top:8px;display:none}
+#app{display:none}
+.hdr{background:var(--bk);color:var(--wh);padding:0 32px;display:flex;align-items:center;justify-content:space-between;min-height:64px;border-bottom:1px solid rgba(255,255,255,.08)}
+.hl{display:flex;align-items:center;gap:20px}
+.hlogo{height:24px;filter:invert(1);opacity:.9}
+.hsep{width:1px;height:18px;background:rgba(255,255,255,.2)}
+.htitle{font-size:13px;font-weight:500;color:rgba(255,255,255,.6)}
+.hbadge{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:3px 8px;border:1px solid rgba(255,255,255,.12);border-radius:3px}
+.hero{background:var(--bk);color:var(--wh);padding:48px 32px 44px;border-bottom:1px solid var(--bd)}
+.heye{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,48px);font-weight:400;line-height:1.1;margin-bottom:14px;max-width:600px}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.45)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.5);max-width:500px;line-height:1.65}
+.dbar{background:var(--lt);border-bottom:1px solid var(--bd);padding:12px 32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dlbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--md);margin-right:4px}
+.dbtn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--bs);background:var(--wh);color:var(--md);transition:all .15s;font-family:'Inter',sans-serif}
+.dbtn:hover{border-color:var(--bk);color:var(--bk)}
+.dbtn.active{background:var(--bk);border-color:var(--bk);color:var(--wh)}
+.nav{background:var(--wh);border-bottom:1px solid var(--bd);padding:0 32px;display:flex;overflow-x:auto;position:sticky;top:0;z-index:100}
+.ntab{padding:14px 16px;font-size:13px;font-weight:500;color:var(--md);cursor:pointer;border:none;border-bottom:2.5px solid transparent;background:none;white-space:nowrap;transition:all .15s;font-family:'Inter',sans-serif}
+.ntab:hover{color:var(--bk)}
+.ntab.active{color:var(--bk);border-bottom-color:var(--bk)}
+.main{max-width:1080px;margin:0 auto;padding:44px 32px}
+.view{display:none}.view.active{display:block}
+.eye{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-bottom:8px}
+.stitle{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;margin-bottom:10px}
+.sdesc{font-size:14px;color:var(--md);max-width:580px;margin-bottom:32px;line-height:1.65}
+.tog{display:inline-flex;border:1px solid var(--bs);border-radius:var(--rs);overflow:hidden;margin-bottom:22px}
+.tbtn{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--md);transition:all .15s;font-family:'Inter',sans-serif}
+.tbtn+.tbtn{border-left:1px solid var(--bs)}
+.tbtn.active{background:var(--bk);color:var(--wh)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:36px;background:var(--bd)}
+.ccard{background:var(--wh);padding:20px}
+.ccard h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.ccard p{font-size:13px;color:var(--md);line-height:1.5}
+.spills{display:flex;gap:3px;margin-top:9px;flex-wrap:wrap}
+.sp{padding:2px 7px;border-radius:3px;font-size:10px;font-weight:500;background:var(--lt);color:var(--md);border:1px solid var(--bd)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+.tc{border:1px solid var(--bd);border-radius:var(--r);padding:20px}
+.tc.feat{border-color:var(--bk)}
+.tc h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.tc .mono{font-size:11px;color:var(--md);margin-bottom:10px;font-family:monospace}
+.tc p{font-size:13px;color:var(--md);line-height:1.6}
+/* LADDER */
+.lhdr-gen{display:grid;grid-template-columns:68px 200px 200px 1fr 14px;gap:10px;padding:10px 18px;background:var(--lt);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md)}
+.lhdr-ops{display:grid;grid-template-columns:68px 300px 1fr 14px;gap:10px;padding:10px 18px;background:var(--lt);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md)}
+.lhdr-csl{display:grid;grid-template-columns:68px 300px 1fr 14px;gap:10px;padding:10px 18px;background:var(--lt);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md)}
+.ltop-gen{display:grid;grid-template-columns:68px 200px 200px 1fr 14px;gap:10px;padding:14px 18px;align-items:start;cursor:pointer}
+.ltop-ops{display:grid;grid-template-columns:68px 300px 1fr 14px;gap:10px;padding:14px 18px;align-items:start;cursor:pointer}
+.ltop-csl{display:grid;grid-template-columns:68px 300px 1fr 14px;gap:10px;padding:14px 18px;align-items:start;cursor:pointer}
+.ladder-wrap{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:36px}
+.lrow{border-top:1px solid var(--bd);background:var(--wh);transition:background .1s}
+.lrow:first-child{border-top:none}
+.lrow:hover{background:#fafafa}
+.lcode{font-family:'Playfair Display',serif;font-size:15px;color:var(--bk);line-height:1.3;padding-top:1px}
+.lcen{font-size:13px;font-weight:500;line-height:1.4}
+.lbiz{font-size:13px;color:var(--md);line-height:1.4}
+.lscope{font-size:13px;color:var(--md);line-height:1.4}
+.chv{width:12px;height:12px;border-right:1.5px solid var(--md);border-bottom:1.5px solid var(--md);transform:rotate(45deg);transition:transform .2s;margin-top:4px;justify-self:end;flex-shrink:0}
+.lrow.open .chv{transform:rotate(-135deg)}
+.ldet{display:none;padding:0 18px 18px;border-top:1px dashed var(--bd)}
+.lrow.open .ldet{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:14px}
+.dl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md);margin-bottom:4px}
+.dt{font-size:13px;line-height:1.5}
+.dex{font-size:12px;color:var(--md);font-style:italic;margin-top:8px;padding:8px 10px;background:var(--lt);border-radius:var(--rs)}
+.mnote{margin-top:10px;padding:10px 12px;background:var(--aml);border-radius:var(--rs);border-left:3px solid #c8a000;font-size:12px;line-height:1.5}
+.mnote strong{display:block;margin-bottom:3px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--am)}
+/* CALLOUTS */
+.callout{border-radius:var(--r);padding:18px 20px;margin-bottom:24px;font-size:13px;line-height:1.6}
+.callout.amber{background:var(--aml);border:1px solid #e0c050}
+.callout.amber strong{color:var(--am);font-size:11px;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.callout.dark{background:var(--bk);color:var(--wh);padding:26px 28px;border-radius:var(--r)}
+.callout.dark h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;margin-bottom:8px}
+.callout.dark p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;max-width:580px}
+/* CALIBRATION */
+.cal-box{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.cal-hdr{padding:20px 24px;border-bottom:1px solid var(--bd)}
+.cal-hdr h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;margin-bottom:4px}
+.cal-hdr p{font-size:13px;color:var(--md)}
+.cal-body{padding:22px 24px}
+.slrow{margin-bottom:14px}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.sl-name{font-size:13px;font-weight:500}
+.sl-val{font-size:14px;font-weight:600}
+.sw{font-size:10px;margin-left:6px;font-weight:400;padding:1px 6px;border-radius:3px}
+.wh{background:#000;color:#fff}
+.wl{background:var(--lt);color:var(--md);border:1px solid var(--bd)}
+input[type=range]{width:100%;accent-color:var(--bk);cursor:pointer}
+.ahint{font-size:11px;color:var(--md);margin-top:3px;min-height:14px}
+.cal-out{margin-top:20px;padding:20px 22px;background:var(--bk);color:var(--wh);border-radius:var(--rs)}
+.col{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
+.clevel{font-family:'Playfair Display',serif;font-size:28px;font-weight:400}
+.ctrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.ctmain{font-size:13px;color:rgba(255,255,255,.8)}
+.cttag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:3px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.6)}
+.ctalt{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px}
+.ctalttag{font-size:10px;font-weight:600;text-transform:uppercase;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);margin-left:4px}
+.cdesc{font-size:13px;color:rgba(255,255,255,.75);margin-top:10px;line-height:1.55;border-top:1px solid rgba(255,255,255,.1);padding-top:10px}
+.cnote{font-size:11px;color:var(--md);margin-top:8px;font-style:italic}
+/* MANAGER SPLIT */
+.ms-box{border:1px solid var(--bs);border-radius:var(--r);padding:22px 24px;margin-bottom:22px;background:#fafafa}
+.ms-box h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.ms-box .ms-desc{font-size:13px;color:var(--md);margin-bottom:16px;line-height:1.55}
+.ms-lbl{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px}
+.ms-lbl span{font-weight:400;color:var(--md)}
+.sbar{display:flex;height:28px;border-radius:var(--rs);overflow:hidden;margin-top:8px;font-size:11px;font-weight:600}
+.sbm{background:var(--bk);color:var(--wh);display:flex;align-items:center;justify-content:center;transition:width .3s;min-width:0;overflow:hidden}
+.sbi{background:var(--lt);color:var(--md);display:flex;align-items:center;justify-content:center;transition:width .3s;border:1px solid var(--bd);min-width:0;overflow:hidden}
+.sleg{display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--md)}
+.sleg span{display:flex;align-items:center;gap:5px}
+.sdot{width:10px;height:10px;border-radius:2px}
+.sprof{margin-top:10px;font-size:12px;color:var(--md);line-height:1.5}
+.sprof strong{color:var(--dk)}
+/* SIGNALS */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;background:var(--bd);margin-bottom:24px}
+.scard{background:var(--wh);padding:18px}
+.scard h4{font-size:13px;font-weight:600;margin-bottom:6px}
+.scard p{font-size:13px;color:var(--md);line-height:1.5}
+/* GROWTH */
+.gpills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.gpill{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--bs);background:var(--wh);color:var(--md);transition:all .15s;font-family:'Inter',sans-serif}
+.gpill:hover{border-color:var(--bk);color:var(--bk)}
+.gpill.active{background:var(--bk);border-color:var(--bk);color:var(--wh)}
+.gpanel{display:none;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-top:4px}
+.gpanel.active{display:block}
+.gphdr{background:var(--bk);color:var(--wh);padding:24px 28px}
+.gpfrom{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.gphdr h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:4px}
+.gpnxt{font-size:13px;color:rgba(255,255,255,.5)}
+.gpbody{padding:24px 28px}
+.gcrit{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--bd)}
+.gcrit:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.gcrit-name{font-size:13px;font-weight:600;margin-bottom:9px}
+.g2col{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:580px){.g2col{grid-template-columns:1fr}}
+.gb{padding:11px 13px;border-radius:var(--rs)}
+.gb.now{background:var(--lt);border-left:3px solid var(--md)}
+.gb.nxt{background:var(--bk);border-left:3px solid var(--bk)}
+.gbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.gb.now .gbl{color:var(--md)}
+.gb.nxt .gbl{color:rgba(255,255,255,.4)}
+.gb.now p,.gb.nxt p{font-size:13px;line-height:1.5}
+.gb.now p{color:var(--dk)}
+.gb.nxt p{color:rgba(255,255,255,.85)}
+.gex{margin-top:14px;padding:13px;background:var(--lt);border-radius:var(--rs)}
+.gex p{font-size:13px;color:var(--md);font-style:italic}
+.mgbox{background:#f9f9f9;border:1.5px solid var(--bk);border-radius:var(--r);padding:16px 18px;margin-top:14px}
+.mgbox h4{font-size:13px;font-weight:600;margin-bottom:5px}
+.mgbox p{font-size:13px;color:var(--md);line-height:1.5}
+.lvtags{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.lvtag{padding:4px 11px;border-radius:4px;font-size:12px;font-weight:600;background:var(--bk);color:var(--wh)}
+.lvtag.no{background:var(--lt);color:var(--md)}
+/* WORKFORCE */
+.wp-intro{background:var(--bk);color:var(--wh);border-radius:var(--r);padding:26px 28px;margin-bottom:28px}
+.wp-intro h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;margin-bottom:8px}
+.wp-intro p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.65;max-width:580px}
+.wp-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:28px}
+.wpc{border:1px solid var(--bd);border-radius:var(--r);padding:16px 18px}
+.wpc .wpl{font-size:11px;color:var(--md);margin-bottom:5px}
+.wpc .wpn{font-family:'Playfair Display',serif;font-size:28px;font-weight:400}
+.wpc .wps{font-size:11px;color:var(--md);margin-top:3px}
+.wpc.hl{border-color:var(--bk)}
+/* EMPLOYEE TABLE */
+.emp-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.emp-controls select,.emp-controls input[type=text]{padding:8px 12px;border:1px solid var(--bs);border-radius:var(--rs);font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--wh)}
+.emp-controls select:focus,.emp-controls input[type=text]:focus{border-color:var(--bk)}
+.etable-wrap{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;overflow-x:auto;margin-bottom:24px}
+.etable{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+.etable th{padding:10px 14px;text-align:left;background:var(--lt);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md);border-bottom:1px solid var(--bd);white-space:nowrap}
+.etable td{padding:9px 14px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.etable tr:last-child td{border-bottom:none}
+.etable tr:hover td{background:#fafafa}
+.lv-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:600;background:var(--lt);color:var(--md);white-space:nowrap}
+.lv-pill.ic1{background:#f0f0f0;color:#666}
+.lv-pill.ic2{background:#e8f0fb;color:#185fa5}
+.lv-pill.ic3{background:#e6f4ec;color:#1a7a4a}
+.lv-pill.ic4{background:#fff3e0;color:#b45309}
+.lv-pill.m1{background:#fdf0ee;color:#993c1d}
+.lv-pill.m2{background:#f5e6f5;color:#7c3aed}
+.lv-pill.m3{background:#fef3c7;color:#92400e}
+.lv-pill.m4,.lv-pill.m5,.lv-pill.m6{background:#1a1a1a;color:#fff}
+.lv-pill.none{background:var(--lt);color:#999;font-style:italic}
+.mgr-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--bk);margin-right:4px;vertical-align:middle}
+.wp-btn{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--bs);background:var(--wh);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.wp-btn:hover{background:var(--bk);color:var(--wh);border-color:var(--bk)}
+.wp-btn.primary{background:var(--bk);color:var(--wh);border-color:var(--bk)}
+.wptable-wrap{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.wptable{width:100%;border-collapse:collapse;font-size:13px}
+.wptable th{padding:10px 14px;text-align:left;background:var(--lt);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--md);border-bottom:1px solid var(--bd);white-space:nowrap}
+.wptable td{padding:10px 14px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.wptable tr:last-child td{border-bottom:none}
+.wptable tr:hover td{background:#fafafa}
+.wptable td input[type=number]{width:60px;padding:5px 8px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;font-family:'Inter',sans-serif;text-align:center;outline:none}
+.wptable td input[type=number]:focus{border-color:var(--bk)}
+.gbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-size:11px;font-weight:600}
+.gbadge.ok{background:var(--gnl);color:var(--gn)}
+.gbadge.warn{background:var(--aml);color:var(--am)}
+.gbadge.crit{background:var(--rdl);color:var(--rd)}
+.gbadge.over{background:var(--lt);color:var(--md)}
+.rb-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rb-label{font-size:12px;font-weight:500;min-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-track{flex:1;height:18px;background:var(--lt);border-radius:3px;overflow:hidden;position:relative;border:1px solid var(--bd)}
+.rb-fill{height:100%;background:var(--bk);border-radius:3px;transition:width .4s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.rb-fill span{font-size:10px;font-weight:600;color:var(--wh)}
+.rb-target{position:absolute;top:0;height:100%;width:2px;background:#c8a000;opacity:.8}
+.rb-stat{font-size:11px;color:var(--md);min-width:120px;text-align:right}
+.emp-count{font-size:12px;color:var(--md);margin-bottom:12px}
+.footer{border-top:1px solid var(--bd);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;margin-top:60px}
+.footer img{height:18px;opacity:.2}
+.footer p{font-size:11px;color:var(--md)}
+</style>
+</head>
+<body>
+<div id="gate">
+  <img src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest" onerror="this.style.display='none'">
+  <div id="gbox">
+    <h2>Career Leveling Guide</h2>
+    <p>Internal resource for Manifest employees, managers, and recruiters.</p>
+    <input type="password" id="ginput" placeholder="Access code" onkeydown="if(event.key==='Enter')checkPass()">
+    <button onclick="checkPass()">Continue</button>
+    <p id="gerr">Incorrect code. Please try again.</p>
+  </div>
+</div>
+
+<div id="app">
+  <div class="hdr">
+    <div class="hl">
+      <img class="hlogo" src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest" onerror="this.style.display='none'">
+      <div class="hsep"></div>
+      <span class="htitle">Career Leveling Guide</span>
+    </div>
+    <span class="hbadge">Internal · People &amp; Talent</span>
+  </div>
+
+  <div class="hero">
+    <div class="heye">Manifest Global · People &amp; Talent</div>
+    <h1>Career <em>Leveling</em><br>at Manifest</h1>
+    <p class="hero-sub">How roles, titles, and expectations are structured across Manifest Global. For candidates, employees planning growth, and managers calibrating hires.</p>
+  </div>
+
+  <div class="dbar">
+    <span class="dlbl">Division:</span>
+    <button class="dbtn active" onclick="setDiv('gen',this)">General</button>
+    <button class="dbtn" onclick="setDiv('ops',this)">SP Operations</button>
+    <button class="dbtn" onclick="setDiv('csl',this)">SP Counseling</button>
+  </div>
+
+  <div class="nav">
+    <button class="ntab active" onclick="switchView('overview',this)">Overview &amp; Criteria</button>
+    <button class="ntab" onclick="switchView('ladder',this)">Level Ladder</button>
+    <button class="ntab" onclick="switchView('hiring',this)">Hiring Calibration</button>
+    <button class="ntab" onclick="switchView('growth',this)">Growth Planning</button>
+    <button class="ntab" onclick="switchView('people',this)">People Data</button>
+    <button class="ntab" onclick="switchView('workforce',this)">Workforce Planning</button>
+  </div>
+
+  <div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="view active" id="view-overview">
+    <div class="callout dark"><h3>What is leveling and why does it matter?</h3><p>Leveling describes the scope, complexity, and impact expected at each career stage. It is not about tenure. It is about the kind of problems you solve, how independently you solve them, and how wide your impact reaches. Every role, hire, and promotion maps back to this framework.</p></div>
+    <div class="eye">The 7 criteria</div>
+    <div class="stitle">What we assess</div>
+    <p class="sdesc">Every role is evaluated across these dimensions. For people managers, People Leadership becomes a core scored criterion. Weight shifts based on team size.</p>
+    <div class="cgrid">
+      <div class="ccard"><h4>📐 Scope &amp; Impact</h4><p>How wide is your reach? From tasks inside one pod, to driving company-critical initiatives with P&amp;L impact.</p><div class="spills"><span class="sp">1 · Task</span><span class="sp">2 · Process</span><span class="sp">3 · Cross-team</span><span class="sp">4 · Function</span><span class="sp">5 · Company</span></div></div>
+      <div class="ccard"><h4>🧩 Complexity</h4><p>How hard are the problems? From following SOPs, to designing patterns the whole organisation adopts.</p><div class="spills"><span class="sp">1 · SOPs</span><span class="sp">2 · Routine</span><span class="sp">3 · Simplifies</span><span class="sp">4 · Systems</span><span class="sp">5 · Paradigms</span></div></div>
+      <div class="ccard"><h4>🧭 Autonomy &amp; Ownership</h4><p>How independently do you operate? From needing close guidance, to being a zero-surprise operator others plan around.</p><div class="spills"><span class="sp">1 · Guided</span><span class="sp">2 · Self-directed</span><span class="sp">3 · End-to-end</span><span class="sp">4 · Strategy</span><span class="sp">5 · Standard</span></div></div>
+      <div class="ccard"><h4>⚡ Hard Skills</h4><p>How deep is your functional expertise? From basic tool usage, to inventing techniques and being an industry authority.</p><div class="spills"><span class="sp">1 · Basic</span><span class="sp">2 · Executes</span><span class="sp">3 · Improves</span><span class="sp">4 · Expert</span><span class="sp">5 · Industry</span></div></div>
+      <div class="ccard"><h4>🤝 Culture &amp; Behaviors</h4><p>How consistently do you embody our values? From needing reminders, to being a culture carrier under pressure.</p><div class="spills"><span class="sp">1 · Reminded</span><span class="sp">2 · Usually</span><span class="sp">3 · Role model</span><span class="sp">4 · Raises bar</span><span class="sp">5 · Carrier</span></div></div>
+      <div class="ccard"><h4>👥 People Leadership</h4><p>Not expected at IC levels. For managers, core criterion. Scaled by actual number of direct reports you manage.</p><div class="spills"><span class="sp">IC · Not required</span><span class="sp">M1 · 2-8 DRs</span><span class="sp">M2 · Leads leads</span><span class="sp">M3-4 · VP layer</span></div></div>
+      <div class="ccard"><h4>📅 Years of Experience</h4><p>A supporting signal, not the deciding factor. Used to sense-check, not to promote automatically.</p><div class="spills"><span class="sp">1 · 0-2 yrs</span><span class="sp">2 · 3-5 yrs</span><span class="sp">3 · 6-10 yrs</span><span class="sp">4 · 10-14 yrs</span><span class="sp">5 · 15+</span></div></div>
+    </div>
+    <div class="eye">Two tracks</div><div class="stitle">IC vs Manager</div><p class="sdesc">Moving into management is not a promotion — it is a different role. Strong ICs can reach IC4 without managing anyone.</p>
+    <div class="two-col">
+      <div class="tc feat"><h3>Individual Contributor (IC)</h3><p class="mono">IC1.1 > IC1.2 > IC2.1 > IC2.2 > IC3.1 > IC3.2 > IC4.1 > IC4.2</p><p>Impact grows through depth and scope. IC4s shape function or company direction without managing people.</p></div>
+      <div class="tc"><h3>People Manager (M)</h3><p class="mono">M1.1 > M1.2 > M2.1 > M2.2 > M3.1 > M3.2 > M4.1 > M4.2 > M5 > M6</p><p>Impact grows through teams built and outcomes owned. Entry requires IC2.2 minimum; IC3.1 preferred.</p></div>
+    </div>
+    <div class="eye">Lean manager context</div><div class="stitle" style="font-size:20px">Managers with 1-2 direct reports</div>
+    <p class="sdesc">Manifest is lean. Managers with small teams remain highly hands-on. Assessment reflects actual role split, not a theoretical full-manager model.</p>
+    <div style="background:var(--lt);border-radius:var(--r);padding:18px 20px;margin-bottom:32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px">
+      <div style="padding:14px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--bd)"><strong style="display:block;font-size:12px;margin-bottom:5px">Nominal (1 DR)</strong><span style="font-size:12px;color:var(--md)">15% mgmt / 85% IC. PL is a minor factor. Primarily assessed as a senior IC with a formal line responsibility.</span></div>
+      <div style="padding:14px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--bd)"><strong style="display:block;font-size:12px;margin-bottom:5px">Lean (2 DRs)</strong><span style="font-size:12px;color:var(--md)">25% mgmt / 75% IC. PL starts to matter but IC depth still dominates.</span></div>
+      <div style="padding:14px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--bd)"><strong style="display:block;font-size:12px;margin-bottom:5px">Hybrid (3-4 DRs)</strong><span style="font-size:12px;color:var(--md)">45% mgmt / 55% IC. Balanced. Both IC depth and people leadership carry equal weight.</span></div>
+      <div style="padding:14px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--bd)"><strong style="display:block;font-size:12px;margin-bottom:5px">Manager-Primary (5-7 DRs)</strong><span style="font-size:12px;color:var(--md)">60% mgmt / 40% IC. People leadership and scope dominate.</span></div>
+      <div style="padding:14px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--bd)"><strong style="display:block;font-size:12px;margin-bottom:5px">Full Manager (8+ DRs)</strong><span style="font-size:12px;color:var(--md)">75% mgmt / 25% IC. Assessment dominated by leadership, team outcomes, and organisational scope.</span></div>
+    </div>
+  </div>
+
+  <!-- LADDER -->
+  <div class="view" id="view-ladder">
+    <div class="eye">Career architecture</div><div class="stitle">Level ladder</div>
+    <p class="sdesc">Click any level to expand the full scope, complexity, autonomy, and people leadership expectations.</p>
+    <div class="tog"><button class="tbtn active" onclick="switchTrack('ic',this)">Individual Contributor</button><button class="tbtn" onclick="switchTrack('mgr',this)">People Manager</button></div>
+    <div id="lic-wrap"><div id="lic-hdr"></div><div class="ladder-wrap" id="lic-rows"></div></div>
+    <div id="lmgr-wrap" style="display:none"><div id="lmgr-hdr"></div><div class="ladder-wrap" id="lmgr-rows"></div></div>
+  </div>
+
+  <!-- HIRING -->
+  <div class="view" id="view-hiring">
+    <div class="eye">For hiring managers &amp; recruiters</div><div class="stitle">Hiring calibration</div>
+    <p class="sdesc">Score a candidate across all criteria. For manager roles, use the Manager Split to reflect the actual role balance.</p>
+    <div class="callout amber"><strong>Manager track eligibility</strong>Candidates can only enter M1.1+ if their IC-equivalent capability is IC2.2 or IC3.1. Candidates below IC2.2 cannot be placed into a manager role.</div>
+    <div class="cal-box">
+      <div class="cal-hdr"><h3>Quick level estimator</h3><p>Select a track, then rate the candidate 1 to 5 on each criterion.</p></div>
+      <div class="cal-body">
+        <div class="tog" style="margin-bottom:18px"><button class="tbtn active" onclick="switchCalcTrack('ic',this)">IC Track</button><button class="tbtn" onclick="switchCalcTrack('mgr',this)">Manager Track</button></div>
+        <div id="ms-sec" style="display:none">
+          <div class="ms-box">
+            <h4>Manager split: direct reports</h4>
+            <p class="ms-desc">Based on full-time direct reports only (not skip-level). Adjusts criteria weighting AND compresses the output score range so lean managers are not over-leveled. A manager with 1 DR scoring all 3s should land at M1.1, not M5.</p>
+            <div class="ms-lbl">Direct reports: <span id="dr-count">3</span></div>
+            <input type="range" min="1" max="12" value="3" id="dr-slider" oninput="updateDR(this.value)" style="margin-bottom:8px">
+            <div class="sbar"><div class="sbm" id="sbm">45% Mgmt</div><div class="sbi" id="sbi">55% IC</div></div>
+            <div class="sleg"><span><span class="sdot" style="background:var(--bk)"></span>Management weight</span><span><span class="sdot" style="background:var(--lt);border:1px solid var(--bd)"></span>IC / Hands-on</span></div>
+            <div class="sprof" id="sprof"></div>
+          </div>
+        </div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Scope &amp; Impact <span class="sw" id="w-scope"></span></span><span class="sl-val" id="v-scope">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('scope',this.value)"><div class="ahint" id="a-scope"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Complexity <span class="sw" id="w-complexity"></span></span><span class="sl-val" id="v-complexity">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('complexity',this.value)"><div class="ahint" id="a-complexity"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Autonomy &amp; Ownership <span class="sw" id="w-autonomy"></span></span><span class="sl-val" id="v-autonomy">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('autonomy',this.value)"><div class="ahint" id="a-autonomy"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Hard Skills <span class="sw" id="w-hardskills"></span></span><span class="sl-val" id="v-hardskills">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('hardskills',this.value)"><div class="ahint" id="a-hardskills"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Culture &amp; Behaviors <span class="sw" id="w-culture"></span></span><span class="sl-val" id="v-culture">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('culture',this.value)"><div class="ahint" id="a-culture"></div></div>
+        <div class="slrow" id="pl-row" style="display:none"><div class="sl-top"><span class="sl-name">People Leadership <span class="sw" id="w-pl"></span></span><span class="sl-val" id="v-pl">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('pl',this.value)"><div class="ahint" id="a-pl"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Years of Experience <span class="sw" id="w-yoe"></span></span><span class="sl-val" id="v-yoe">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('yoe',this.value)"><div class="ahint" id="a-yoe"></div></div>
+        <div class="cal-out"><div class="col">Suggested level</div><div class="clevel" id="out-level">—</div><div id="out-title" style="margin-top:6px"></div><div class="cdesc" id="out-desc"></div></div>
+        <p class="cnote">Starting point only. Validate against the Level Ladder. A score of 3 across all criteria for a 1-DR manager correctly gives M1.1, not a senior manager level.</p>
+      </div>
+    </div>
+    <div class="eye" style="margin-top:32px">Interview signals</div>
+    <div class="stitle" style="font-size:20px">What to probe per criterion</div>
+    <div class="sgrid">
+      <div class="scard"><h4>📐 Scope &amp; Impact</h4><p>Largest initiative owned end-to-end. Specific metric outcomes: %, time saved, cost reduced. Vague impact claims signal lower score.</p></div>
+      <div class="scard"><h4>🧩 Complexity</h4><p>Where they simplified something messy. Reduced handoffs, resolved cross-team blockers, or built systems others now reuse.</p></div>
+      <div class="scard"><h4>🧭 Autonomy &amp; Ownership</h4><p>A time they had no playbook. Proactive risk identification, decisions without escalation, zero-surprises patterns.</p></div>
+      <div class="scard"><h4>⚡ Hard Skills</h4><p>Real functional scenario. Depth of diagnosis: can they teach back, review others' work, invent new methods?</p></div>
+      <div class="scard"><h4>🤝 Culture &amp; Behaviors</h4><p>Owned a mistake publicly, or raised a standard others did not meet. Consistent patterns, not just one good story.</p></div>
+      <div class="scard"><h4>👥 People Leadership</h4><p>For lean managers: quality of 1:1s, whether DRs are growing. For full managers: attrition, performance cases, succession depth.</p></div>
+    </div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="view" id="view-growth">
+    <div class="eye">For employees &amp; their managers</div><div class="stitle">Growth planning</div>
+    <p class="sdesc">Select your current level to see exactly what changes criterion by criterion to reach the next level. IC-to-Manager transitions are shown separately.</p>
+    <div class="eye" style="margin-bottom:8px">IC track</div><div class="gpills" id="gpills-ic"></div>
+    <div class="eye" style="margin-top:24px;margin-bottom:6px">IC to Manager transition</div>
+    <p style="font-size:13px;color:var(--md);margin-bottom:12px;line-height:1.55">Moving to the Manager track is a deliberate choice, not a standard level step. It requires meeting specific eligibility criteria.</p>
+    <div class="gpills" id="gpills-i2m"></div>
+    <div class="eye" style="margin-top:24px;margin-bottom:8px">Manager track</div><div class="gpills" id="gpills-mgr"></div>
+    <div id="growth-panels" style="margin-top:16px"></div>
+  </div>
+
+  <!-- PEOPLE DATA -->
+  <div class="view" id="view-people">
+    <div class="eye">Live employee data</div><div class="stitle">People &amp; Leveling</div>
+    <p class="sdesc">Full-time employees only (200 records from January 2026 data). Filter by department, division, leveling band, or manager status.</p>
+    <div class="emp-controls">
+      <input type="text" id="emp-search" placeholder="Search name or title..." oninput="renderEmpTable()" style="min-width:200px">
+      <select id="emp-dept" onchange="renderEmpTable()"><option value="">All departments</option></select>
+      <select id="emp-level" onchange="renderEmpTable()"><option value="">All levels</option></select>
+      <select id="emp-mgr" onchange="renderEmpTable()"><option value="">All roles</option><option value="1">Managers only</option><option value="0">ICs only</option></select>
+      <button class="wp-btn" onclick="clearEmpFilters()">Clear filters</button>
+    </div>
+    <div class="emp-count" id="emp-count"></div>
+    <div class="etable-wrap"><table class="etable"><thead><tr><th>Name</th><th>Title</th><th>Department</th><th>Division</th><th>Site</th><th>Level</th><th>DRs</th><th>Suggested</th></tr></thead><tbody id="emp-tbody"></tbody></table></div>
+  </div>
+
+  <!-- WORKFORCE PLANNING -->
+  <div class="view" id="view-workforce">
+    <div class="wp-intro"><h3>Workforce planning: leveling health</h3><p>Current leveling distribution from January 2026 data (full-time, 200 employees). Edit actual headcount to recalculate against benchmarks.</p></div>
+    <div class="eye">Summary (from live data)</div><div class="wp-sum" id="wp-sum"></div>
+    <div class="eye" style="margin-top:4px">IC / Manager ratio by department</div>
+    <div id="ratio-bars" style="margin-bottom:24px"></div>
+    <div class="eye" style="margin-top:8px">Level distribution by department</div>
+    <p style="font-size:13px;color:var(--md);margin-bottom:16px;line-height:1.55">Headcount is pre-populated from actual data. Edit to model future states. Benchmark gaps are shown for reference.</p>
+    <div class="emp-controls">
+      <select id="wp-dept" onchange="renderWP()"><option value="all">All departments</option></select>
+      <button class="wp-btn" onclick="resetWP()">Reset to actual data</button>
+      <button class="wp-btn primary" onclick="renderWP();renderRatioBars();renderWPSum()">Recalculate</button>
+    </div>
+    <div class="wptable-wrap"><table class="wptable"><thead><tr><th>Department</th><th>Level band</th><th>Actual</th><th>Benchmark %</th><th>Target</th><th>Gap</th><th>Status</th></tr></thead><tbody id="wp-tbody"></tbody></table></div>
+    <div class="eye" style="margin-top:8px">Insights</div><div id="wp-insights" style="margin-bottom:32px"></div>
+  </div>
+
+  </div>
+  <div class="footer">
+    <img src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest" onerror="this.style.display='none'">
+    <p>Manifest Global · People &amp; Talent · January 2026 · Full-time employees · Internal use only</p>
+  </div>
+</div>
+<script>
+const EMPDATA = [{"n": "Yash Jain", "jt": "Marketing & Business Development Specialist", "d": "Central Marketing", "dv": "Product Marketing", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC1.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "StudyRight (For now - Cialfo)", "gn": "Male", "tn": "0.364"}, {"n": "Chloe Elkin", "jt": "Associate Director of Marketing", "d": "Central Marketing", "dv": "Product Marketing", "si": "United Kingdom", "dr": "1", "im": 1, "lv": "M1.2", "st": "Associate Head of Marketing, Explore", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "2.795"}, {"n": "Chantelle McInnes", "jt": "Content Manager", "d": "Central Marketing", "dv": "Content Marketing", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "5.328"}, {"n": "Ann Gracious", "jt": "Associate Director of Client Partnerships", "d": "Central Marketing", "dv": "Product Marketing", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "IC3.2", "st": "Associate Head of Marketing, K12  ", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "1.38"}, {"n": "Ankit Chawla", "jt": "Marketing Manager", "d": "Central Marketing", "dv": "Product Marketing", "si": "Singapore", "dr": "2", "im": 1, "lv": "IC2.2", "st": "", "nl": "", "pt": "Mid Potential", "br": "First Counselor (For now - Cialfo)", "gn": "Male", "tn": "1.476"}, {"n": "Khushbu Thakur", "jt": "Senior Marketing Manager", "d": "Central Marketing", "dv": "Events Marketing", "si": "India (North & East)", "dr": "1", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "3.124"}, {"n": "Ronak Jayesh Shah", "jt": "Head of Marketing Operations", "d": "Central Marketing", "dv": "Marketing Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.038"}, {"n": "Carrie Wang (Wang Yi Nan/ \u738b\u4f9d\u6960)", "jt": "Marketing Manager", "d": "Central Marketing", "dv": "Marketing Operations", "si": "China", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "3.526"}, {"n": "Vedika Pasari", "jt": "Events Specialist", "d": "Central Marketing", "dv": "Events Marketing", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "2.683"}, {"n": "Neel Kashyap", "jt": "Web Developer", "d": "Central Marketing", "dv": "Digital Marketing", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "1.035"}, {"n": "Simran Singh", "jt": "Creative Content Marketer", "d": "Central Marketing", "dv": "Content Marketing", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.92"}, {"n": "Ishika Singh", "jt": "Creative Content Marketer", "d": "Central Marketing", "dv": "Content Marketing", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "0.843"}, {"n": "Aditya Ruhela", "jt": "Graphic Designer", "d": "Central Marketing", "dv": "Marketing Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.728"}, {"n": "Rashash", "jt": "Graphic Designer", "d": "Central Marketing", "dv": "Marketing Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.671"}, {"n": "Ronak Jayesh Shah", "jt": "Head of Marketing Operations", "d": "Central Marketing", "dv": "Marketing Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M2.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Archit Sharma", "jt": "Marketing Operations Specialist", "d": "Central Marketing", "dv": "Central Marketing - Operations", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Puneet Nagpal", "jt": "Head of Marketing, K12", "d": "Central Marketing", "dv": "Central Marketing - Leaderships", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M2.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Tarun Negi", "jt": "Design Manager", "d": "Central Marketing", "dv": "Central Marketing - Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M1.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Mohit Mmangal", "jt": "Senior Director & Site Leader \u2013 India Operations", "d": "Central Operations", "dv": "Central Operations -  Leadership", "si": "India (Delhi)", "dr": "7", "im": 1, "lv": "M3.2", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "3.181"}, {"n": "Ashish Kumar", "jt": "Team Lead, Operations", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "4", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "3.546"}, {"n": "Susmita Paul Rathi", "jt": "Senior Manager, Operations", "d": "Central Operations", "dv": "University Operations", "si": "India (North & East)", "dr": "3", "im": 1, "lv": "M1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "4.761"}, {"n": "Jenny Jiang (Jiang Ye/ \u848b\u6654)", "jt": "Senior Product Support Specialist - I", "d": "Central Operations", "dv": "Client Support", "si": "China", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "3.641"}, {"n": "Prial Gupta", "jt": "Senior Product Support Specialist - I", "d": "Central Operations", "dv": "Client Support", "si": "India (South)", "dr": "0", "im": 0, "lv": "", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.057"}, {"n": "Yashank Srivastava", "jt": "Team Lead, Operations", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "4", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "3.526"}, {"n": "Ramona Stephen", "jt": "Associate Operations Lead", "d": "Central Operations", "dv": "University Operations", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "IC2.2", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "3.028"}, {"n": "Kartik Sethi", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "0.977"}, {"n": "Riya Goyal", "jt": "Team Lead, Operations", "d": "Central Operations", "dv": "Client Support", "si": "India (North & East)", "dr": "6", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "2.894"}, {"n": "Sudhanshu Sundriyal", "jt": "Senior Operations Specialist  - I", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "2.683"}, {"n": "Mizna Suhail", "jt": "Product Support Specialist - II", "d": "Central Operations", "dv": "Client Support", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "2.549"}, {"n": "Aakash Nigam", "jt": "Senior Product Support Specialist - I", "d": "Central Operations", "dv": "Client Support", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "2.549"}, {"n": "Tanmay Gupta", "jt": "Operations Specialist - I", "d": "Central Operations", "dv": "University Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "1.591"}, {"n": "Nandini Gupta", "jt": "Product Support Specialist", "d": "Central Operations", "dv": "Client Support", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "1.188"}, {"n": "Vinayak Vijay Sharma", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "0.977"}, {"n": "Muskan Khanna", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "0.843"}, {"n": "Rohit Chawla", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.517"}, {"n": "Anushka Kashyap", "jt": "Product Support Specialist", "d": "Central Operations", "dv": "Client Support", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.556"}, {"n": "Mansi Singh", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.422"}, {"n": "Piyush Rawat", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.249"}, {"n": "Manjush Vasudevan", "jt": "Product Support Specialist", "d": "Central Operations", "dv": "Client Support", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.172"}, {"n": "Aakansha Mishra", "jt": "Operations Associate", "d": "Central Operations", "dv": "University Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.057"}, {"n": "Sweety Bissi", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.038"}, {"n": "Aakansha Mishra", "jt": "Operations Associate", "d": "Central Operations", "dv": "University Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Sweety Bissi", "jt": "Operations Specialist", "d": "Central Operations", "dv": "Business Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Varun Naithani", "jt": "Product Support Specialist", "d": "Central Operations", "dv": "Central Ops - Product Support Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Rinyapat Suwansaroj", "jt": "Office Operations Executive", "d": "Corporate - Office Management", "dv": "CEO's Office", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Alessandro Iacovacci", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Male", "tn": "3.181"}, {"n": "Ahmad Shafiq", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "IC3.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "4.772"}, {"n": "Hitendra Kumar", "jt": "VP of Engineering", "d": "Engineering", "dv": "Engineering - Leadership", "si": "Singapore", "dr": "23", "im": 1, "lv": "M4.1", "st": "", "nl": "", "pt": "", "br": "Manifest", "gn": "Male", "tn": "9.974"}, {"n": "Joshua Adela", "jt": "Support Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Philippines", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "9.153"}, {"n": "Ahsan, Fraz", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "5.054"}, {"n": "Vishal Gosain", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "IC2.2", "st": "", "nl": "IC3.1", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "4.821"}, {"n": "Mohiuddin, Ather", "jt": "Software Engineering Lead", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "7.628"}, {"n": "Yadav, Narender", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "4.619"}, {"n": "Tayyab Javed", "jt": "Team Lead, Software Quality Engineering", "d": "Engineering", "dv": "Quality Engineering", "si": "Pakistan", "dr": "4", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "4.32"}, {"n": "Muhammad Talha Javed", "jt": "Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.984"}, {"n": "Waqas Akhtar", "jt": "Senior Software Quality Engineer", "d": "Engineering", "dv": "Quality Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.795"}, {"n": "Uzair Akbar", "jt": "Principal Data Engineer", "d": "Engineering", "dv": "Data Analytics & Business Intelligence", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.603"}, {"n": "Beer Mohamed S", "jt": "Lead Engineer, Infrastructure", "d": "Engineering", "dv": "Infrastructure", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.392"}, {"n": "Saqlain Qazi", "jt": "Senior Mobile Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.411"}, {"n": "Haseeb Elahi", "jt": "Staff Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "Pakistan", "dr": "2", "im": 1, "lv": "IC3.2", "st": "", "nl": "IC4.1", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "3.907"}, {"n": "Himanshu Jain", "jt": "Program Manager", "d": "Engineering", "dv": "Engineering - Leadership", "si": "India (Delhi)", "dr": "2", "im": 1, "lv": "M1.2", "st": "", "nl": "M2.1", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "3.488"}, {"n": "Vaibhav Shrivastava", "jt": "Senior Software Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "2.549"}, {"n": "Shivam Sharma", "jt": "Data Engineer", "d": "Engineering", "dv": "Product Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.1", "st": "", "nl": "IC1.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "1.38"}, {"n": "Khushboo Singh", "jt": "Quality Engineer", "d": "Engineering", "dv": "Quality Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "1.322"}, {"n": "Sachin Kumar Singh", "jt": "Team Lead, Product Engineering", "d": "Engineering", "dv": "Product Engineering", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "IC3.2", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "4.025"}, {"n": "Nitin Kumar", "jt": "Software Quality Engineer", "d": "Engineering", "dv": "Quality Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "0.69"}, {"n": "Saransh Mishra", "jt": "Backend Engineer", "d": "Engineering", "dv": "Data Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.115"}, {"n": "Saransh Mishra", "jt": "Backend Engineer", "d": "Engineering", "dv": "Data Engineering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": ""}, {"n": "Jonah Duffin", "jt": "Managing Director, Explore", "d": "Explore", "dv": "Explore - Leadership", "si": "United Kingdom", "dr": "5", "im": 1, "lv": "M4.1", "st": "", "nl": "", "pt": "High Potential", "br": "Explore", "gn": "Male", "tn": "2.146"}, {"n": "Ciara Newby", "jt": "Senior Director, Global University Partnerships", "d": "Explore", "dv": "Explore - Leadership", "si": "United States", "dr": "3", "im": 1, "lv": "M2.2", "st": "", "nl": "M3.1", "pt": "High Potential", "br": "Explore", "gn": "Female", "tn": "3.258"}, {"n": "Dominique Luthringer", "jt": "Director of University Engagement", "d": "Explore", "dv": "Explore - Engagement", "si": "Ireland", "dr": "0", "im": 0, "lv": "IC3.2", "st": "", "nl": "", "pt": "High Potential", "br": "Explore", "gn": "Female", "tn": "3.411"}, {"n": "Meera Seshadri", "jt": "Regional Director, Americas", "d": "Explore", "dv": "Explore - Engagement", "si": "Canada", "dr": "0", "im": 0, "lv": "IC3.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "3.277"}, {"n": "Matt Criddle", "jt": "Regional Director, UK & ROW", "d": "Explore", "dv": "Explore - Leadership", "si": "United Kingdom", "dr": "2", "im": 1, "lv": "M2.2", "st": "", "nl": "M3.1", "pt": "", "br": "Explore", "gn": "Male", "tn": "4.808"}, {"n": "Ryan Fleming", "jt": "Regional Director, US", "d": "Explore", "dv": "Explore - Sales", "si": "United States", "dr": "0", "im": 0, "lv": "IC3.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Male", "tn": "1.487"}, {"n": "Andria Sloan", "jt": "University Engagement Manager", "d": "Explore", "dv": "Explore - Engagement", "si": "United States", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "1.572"}, {"n": "Adam D'Arcy", "jt": "University Engagement Manager", "d": "Explore", "dv": "Explore - Engagement", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Male", "tn": "1.591"}, {"n": "Katie Holdcroft", "jt": "University Engagement Manager", "d": "Explore", "dv": "Explore - Engagement", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "Mid Potential", "br": "Explore", "gn": "Female", "tn": "1.569"}, {"n": "Carol Cortilet-Albrecht, Ed.D.", "jt": "Associate Director - US", "d": "Explore", "dv": "Explore - Sales", "si": "United States", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "1.552"}, {"n": "Choy See, Loke", "jt": "FP&A Manager", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC3.2", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": ""}, {"n": "Trisha Jay Ning", "jt": "Manager - Financial Planning & Analysis", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "Singapore", "dr": "5", "im": 1, "lv": "M1.1", "st": "", "nl": "M1.2", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "4.255"}, {"n": "Karan Nahar", "jt": "Global Controller", "d": "Finance", "dv": "Finance - Leadership", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "M2.2", "st": "", "nl": "M3.1", "pt": "High Potential", "br": "Kaaiser", "gn": "Male", "tn": "3.124"}, {"n": "Abhishek Rajvanshi", "jt": "Analyst - Financial Planning & Analysis", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "IC3.1", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "2.568"}, {"n": "Haziqah Zb", "jt": "Manager - Financial Reporting", "d": "Finance", "dv": "Financial Reporting", "si": "Singapore", "dr": "5", "im": 1, "lv": "IC3.1", "st": "", "nl": "No promotion", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "4.58"}, {"n": "Rajeev", "jt": "Analyst - Financial Reporting", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "4.293"}, {"n": "Avi Chhabra", "jt": "Analyst - Revenue & Billing", "d": "Finance", "dv": "Finance Shared Services", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "4.178"}, {"n": "Tan, Evalyn", "jt": "Senior Vice President of Corporate Development and Finance", "d": "Finance", "dv": "Finance - Leadership", "si": "Singapore", "dr": "5", "im": 1, "lv": "M4.1", "st": "", "nl": "", "pt": "High Potential", "br": "Manifest", "gn": "Female", "tn": "4.906"}, {"n": "Vaishali Sondagar", "jt": "Analyst - Financial Reporting", "d": "Finance", "dv": "Financial Reporting", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Female", "tn": "2.201"}, {"n": "Zulfiqar Alam", "jt": "Analyst - Revenue and Billing", "d": "Finance", "dv": "Finance Shared Services", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "No promotion", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.613"}, {"n": "Sudhakar Khatri", "jt": "Finance Executive", "d": "Finance", "dv": "Finance", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.153"}, {"n": "Vanessa Hoo", "jt": "FP&A Analyst", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "0.134"}, {"n": "Shivani", "jt": "Finance Executive", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.115"}, {"n": "Shivam Dang", "jt": "Financial Reporting Analyst", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.057"}, {"n": "Sudhakar Khatri", "jt": "Finance Executive", "d": "Finance", "dv": "Finance", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": ""}, {"n": "Vanessa Hoo", "jt": "FP&A Analyst", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": ""}, {"n": "Shivani", "jt": "Finance Executive", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": ""}, {"n": "Shivam Dang", "jt": "Financial Reporting Analyst", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Choy See, Loke", "jt": "FP&A Manager", "d": "Finance", "dv": "Financial Planning & Analysis", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Dinesh Kumar", "jt": "Senior Financial Reporting Analyst", "d": "Finance", "dv": "Financial Reporting", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Benji Evans", "jt": "Senior Manager - Strategic Operations", "d": "Global", "dv": "Strategic Operations", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC3.2", "st": "", "nl": "", "pt": "High Potential", "br": "Manifest", "gn": "Male", "tn": "2.971"}, {"n": "Rohan Pasari", "jt": "Co-Founder & CEO", "d": "Global", "dv": "CEO's Office", "si": "Singapore", "dr": "9", "im": 1, "lv": "M6", "st": "", "nl": "", "pt": "High Potential", "br": "Manifest", "gn": "Male", "tn": "13.572"}, {"n": "Pooja Gupta", "jt": "Chief Operating Officer, Manifest Global", "d": "Global", "dv": "CEO's Office", "si": "Singapore", "dr": "12", "im": 1, "lv": "M4.2", "st": "", "nl": "", "pt": "High Potential", "br": "Manifest", "gn": "Female", "tn": "2.951"}, {"n": "Srishti Chakrabarty", "jt": "Business Operations Manager", "d": "Global", "dv": "Content Marketing", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "1.106"}, {"n": "Kritchawan Bunyong", "jt": "Executive Assistant", "d": "Global", "dv": "CEO's Office", "si": "Singapore", "dr": "1", "im": 1, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Manifest", "gn": "Female", "tn": "0.747"}, {"n": "Nora Xiong (Xiong Binjun/ \u718a\u5f6c\u541b)", "jt": "Strategic Partnerships Manager", "d": "K - 12", "dv": "Cialfo - Strategic Partnerships", "si": "China", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "3.565"}, {"n": "Snow Fu", "jt": "Associate Director of Strategic Partnerships", "d": "K - 12", "dv": "Cialfo - Strategic Partnerships", "si": "China", "dr": "2", "im": 1, "lv": "IC3.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "2.645"}, {"n": "Teresa Li", "jt": "VP of Global K-12", "d": "K - 12", "dv": "K12 - Leadership", "si": "China", "dr": "18", "im": 1, "lv": "M4.1", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "6.612"}, {"n": "Jen Auty", "jt": "Senior Client Partner", "d": "K - 12", "dv": "BridgeU - Client Partnering", "si": "United Kingdom", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Female", "tn": "6.899"}, {"n": "Federico Stamatti", "jt": "Client Partner", "d": "K - 12", "dv": "BridgeU - Client Partnering", "si": "Colombia", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Male", "tn": "2.026"}, {"n": "Ejona Gjata", "jt": "Senior Client Partner", "d": "K - 12", "dv": "BridgeU - Client Partnering", "si": "Hong Kong", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Female", "tn": "6.804"}, {"n": "Nitish Suryakant Itagikar", "jt": "Client Partner", "d": "K - 12", "dv": "K-12 Sales", "si": "United Arab Emirates", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "BridgeU", "gn": "Male", "tn": "0.077"}, {"n": "Swati Seth", "jt": "Senior Director, India", "d": "K - 12", "dv": "Cialfo - Sales", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC4.1", "st": "Senior Director, K12", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "8.586"}, {"n": "Shan Wang (Wang Shan/ \u738b\u59d7)", "jt": "Client Partner ", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "China", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "4.044"}, {"n": "Chia, Stanley", "jt": "Co-Founder & COO", "d": "K - 12", "dv": "K12 - Leadership", "si": "Singapore", "dr": "0", "im": 0, "lv": "", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "13.572"}, {"n": "Debapriya Chatterjee", "jt": "Client Partner ", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "3.526"}, {"n": "Rachel Zhang (Ruyi Zhang/ \u5f20\u5982\u4f0a)", "jt": "Senior Client Partner", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "China", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "3.546"}, {"n": "Khushnuma Bhadha", "jt": "Director of Strategic Initiatives", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "India (South)", "dr": "2", "im": 1, "lv": "M1.2", "st": "Director of Client Partnering", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "4.945"}, {"n": "Aletza \u00c1lvarez", "jt": "Client Support Manager", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "Mexico", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "1.188"}, {"n": "Nasreen Gani", "jt": "Client Partner", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.537"}, {"n": "Sanya Mandloi", "jt": "Client Partner ", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "Singapore", "dr": "2", "im": 1, "lv": "IC2.1", "st": "", "nl": "M1.1", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "1.889"}, {"n": "Tracy Bui", "jt": "Client Partner", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "Vietnam", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.211"}, {"n": "Yida Xiao", "jt": "Strategic Growth Partner", "d": "K - 12", "dv": "K-12 China", "si": "China", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "0.172"}, {"n": "Tiara Avilla Putri Megantara", "jt": "Growth and Partnerships Associate", "d": "K - 12", "dv": "Cialfo - Sales", "si": "Indonesia", "dr": "0", "im": 0, "lv": "IC1.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": "0.057"}, {"n": "Wang, Dorothy (Dorothy/ \u738b\u51ac\u7434)", "jt": "Associate Director of Client Support", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "China", "dr": "3", "im": 1, "lv": "M1.1", "st": "Associate Director of Client Partnering", "nl": "M1.2", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "6.344"}, {"n": "Cassandra Ye", "jt": "Client Partner ", "d": "K - 12", "dv": "Cialfo - Client Partnering", "si": "China", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "IC2.2", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "2.511"}, {"n": "Diana Gravett", "jt": "Senior Client Partner", "d": "K - 12", "dv": "BridgeU - Client Partnering", "si": "Hong Kong", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "M1.1", "pt": "Mid Potential", "br": "BridgeU", "gn": "Female", "tn": "3.926"}, {"n": "Nitish Suryakant Itagikar", "jt": "Client Partner", "d": "K - 12", "dv": "K-12 Sales", "si": "United Arab Emirates", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Tiara Avilla Putri Megantara", "jt": "Growth and Partnerships Associate", "d": "K - 12", "dv": "Cialfo - Sales", "si": "Indonesia", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Adrian Nguyen", "jt": "Growth and Partnerships Associate", "d": "K - 12", "dv": "Cialfo - Sales", "si": "Vietnam", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Carlo Cicero", "jt": "Client Partner, Europe", "d": "K - 12", "dv": "BridgeU - Client Partnerships", "si": "Spain", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Yu Zhai", "jt": "Associate Director of Growth & Partnerships", "d": "K - 12", "dv": "Cialfo - Sales", "si": "China", "dr": "0", "im": 0, "lv": "M1.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Rakesh Soni", "jt": "Managing Director, Kaaiser", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M4.1", "st": "", "nl": "", "pt": "High Potential", "br": "Kaaiser", "gn": "Male", "tn": "0.134"}, {"n": "Vishal Sharma", "jt": "Regional Partnerships Manager", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Anoy Sengupta", "jt": "Regional Partnerships Manager", "d": "Kaaiser", "dv": "", "si": "India (West)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Subramanya MN", "jt": "Regional Partnerships Manager", "d": "Kaaiser", "dv": "", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Sourabh Subhash Kuthe", "jt": "Agent Success Partner", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Meenakshi Panwar", "jt": "Senior Operations Manager", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Himika Bansal", "jt": "HR Manager", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Kapil Chandok", "jt": "CEO, Kaaiser", "d": "Kaaiser", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M5", "st": "", "nl": "", "pt": "", "br": "", "gn": "", "tn": ""}, {"n": "Rakesh Soni", "jt": "Managing Director, Kaaiser", "d": "Management Office", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "M4.1", "st": "", "nl": "", "pt": "", "br": "Kaaiser", "gn": "Male", "tn": ""}, {"n": "Sanhita Bhattacharya", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (West)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": ""}, {"n": "Millie Lai", "jt": "Team Lead, University Enrolment", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "Malaysia", "dr": "0", "im": 0, "lv": "IC3.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Female", "tn": ""}, {"n": "Sanchita K", "jt": "Senior Product Manager", "d": "Product", "dv": "Product Management", "si": "Hong Kong", "dr": "1", "im": 1, "lv": "IC2.1", "st": "", "nl": "IC3.1", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "8.222"}, {"n": "Charles David Antony Arulraj", "jt": "Associate Director of Product", "d": "Product", "dv": "Product Management", "si": "India (South)", "dr": "2", "im": 1, "lv": "M1.2", "st": "Associate Head of Product", "nl": "", "pt": "High Potential", "br": "Explore", "gn": "Male", "tn": "3.354"}, {"n": "Nimisha Ojha", "jt": "Senior Product Operations Specialist", "d": "Product", "dv": "Product Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Explore", "gn": "Female", "tn": "3.546"}, {"n": "Rajat Khanna", "jt": "Associate Director of Product", "d": "Product", "dv": "Product Management", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "M1.2", "st": "Associate Head of Product", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "3.699"}, {"n": "Vidhu Raj Singh", "jt": "Associate Product Manager", "d": "Product", "dv": "Product Management", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "0.326"}, {"n": "Bilal Ibrahim", "jt": "Senior Product Manager", "d": "Product", "dv": "Product Management", "si": "Pakistan", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "4.572"}, {"n": "Maitreyi Garg", "jt": "Senior Product Designer", "d": "Product", "dv": "Product Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.057"}, {"n": "Carrier, Charles", "jt": "Senior Program Manager", "d": "Product", "dv": "Product Operations", "si": "China", "dr": "4", "im": 1, "lv": "M1.1", "st": "", "nl": "M1.2", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "6.656"}, {"n": "Hund, William James", "jt": "Co-Founder & CPO", "d": "Product", "dv": "Product - Leadership", "si": "Singapore", "dr": "8", "im": 1, "lv": "M5", "st": "", "nl": "", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "9.18"}, {"n": "Aayushi Rawat", "jt": "Senior Product Operations Specialist", "d": "Product", "dv": "Product Operations", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "Mid Potential", "br": "Cialfo", "gn": "Female", "tn": "3.105"}, {"n": "Prashant Manda", "jt": "Senior Product Designer", "d": "Product", "dv": "Product Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.939"}, {"n": "Siddharth Kansal", "jt": "Airtable Developer & Administrator", "d": "Product", "dv": "Product Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.728"}, {"n": "Mayank Nagpal", "jt": "Airtable Developer and Administrator", "d": "Product", "dv": "Product Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.23"}, {"n": "Dhruv Pandey", "jt": "Program Manager", "d": "Product", "dv": "Product Management", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.077"}, {"n": "Abhishek Sethi", "jt": "Airtable Developer and Administrator", "d": "Product", "dv": "Product Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.057"}, {"n": "Dhruv Pandey", "jt": "Program Manager", "d": "Product", "dv": "Product Management", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Abhishek Sethi", "jt": "Airtable Developer and Administrator", "d": "Product", "dv": "Product Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Maitreyi Garg", "jt": "Senior Product Designer", "d": "Product", "dv": "Product Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Nistha Kaushal", "jt": "Senior Product Designer", "d": "Product", "dv": "Product - Product Design", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Dinesh Kumar Maurya", "jt": "Partnership Success Manager", "d": "Student Placements", "dv": "Comet", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "2.817"}, {"n": "Aanchal Verma", "jt": "Team Lead, Operations", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "High Potential", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "3.488"}, {"n": "Aarti Sharma", "jt": "Operations Manager", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "12", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "High Potential", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "4.005"}, {"n": "Ayush Shukla", "jt": "Associate Operations Lead", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "1", "im": 1, "lv": "IC2.2", "st": "", "nl": "IC2.2", "pt": "High Potential", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "3.354"}, {"n": "Palak Shukla", "jt": "Operations Specialist - II", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "3.354"}, {"n": "Tejswari", "jt": "Senior Business Process Specialist, Student Placements", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "3.354"}, {"n": "Kamal Kant", "jt": "Senior Director, Student Placements", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (Delhi)", "dr": "7", "im": 1, "lv": "M2.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "0.241"}, {"n": "Charvi Ahuja", "jt": "Senior Operations Specialist - I", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "Senior Operations Specialist", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "2.99"}, {"n": "Hoa (Lynn)", "jt": "Visa Application Officer", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "Vietnam", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "2.491"}, {"n": "Ayush Dhall", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (North & East)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "2.316"}, {"n": "Supriya Dev", "jt": "Pre-Counselling Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "Senior Pre-Counselling Advisor", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "1.725"}, {"n": "Swathi B Shetty", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "1.131"}, {"n": "Millie Lai", "jt": "Team Lead, University Enrolment", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "Malaysia", "dr": "3", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "High Potential", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.134"}, {"n": "Suruchi Bharti", "jt": "Operations Specialist", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.805"}, {"n": "Vani Prakash", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.671"}, {"n": "Preksha Kothari", "jt": "Team Lead, University Enrolment", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (South)", "dr": "1", "im": 1, "lv": "M1.1", "st": "Associate Director, University Enrolment", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "3.201"}, {"n": "Somraj .", "jt": "Operations Specialist", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "Operations Specialist", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "0.479"}, {"n": "Debika Bose", "jt": "Operations Specialist", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.402"}, {"n": "Lan-Anh Nguyen", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "Vietnam", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.422"}, {"n": "Tanzeem Alvi", "jt": "Senior Operations Specialist", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "Senior Operations Specialist", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "0.192"}, {"n": "Rishabh Goswami", "jt": "Senior Operations Specialist", "d": "Student Placements", "dv": "Student Placement - Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "Senior Operations Specialist", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Male", "tn": "0.23"}, {"n": "Tanisha Sharma", "jt": "University Enrolment Manager", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (North & East)", "dr": "1", "im": 1, "lv": "M1.1", "st": "", "nl": "AD, University Enrolment", "pt": "High Potential", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "3.984"}, {"n": "Ailsa Adrina", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "Indonesia", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.172"}, {"n": "Claire Ji", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "China", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.192"}, {"n": "Sanhita Bhattacharya", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (West)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "First Counselor (For Now - Cialfo)", "gn": "Female", "tn": "0.153"}, {"n": "Haritha Rajaputhra", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Muhammad Arkan Muhadzib", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "Indonesia", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Male", "tn": ""}, {"n": "Meena R", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Akanksha", "jt": "Senior Product Manager", "d": "Product", "dv": "", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Harmeet Kaur", "jt": "University Enrolment Advisor", "d": "Student Placements", "dv": "Student Placement -  Counseling", "si": "India (South)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "", "gn": "Female", "tn": ""}, {"n": "Tenille Jay Chyen", "jt": "Talent & Business Operations Specialist", "d": "Talent", "dv": "Talent Operations", "si": "Singapore", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "0.627"}, {"n": "Kartikey Bhatt", "jt": "Talent Acquisition Specialist", "d": "Talent", "dv": "Talent Acquisition", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "IC2.1", "pt": "High Potential", "br": "Cialfo", "gn": "Male", "tn": "0.652"}, {"n": "Satyam Singh", "jt": "Global Talent Operations Lead", "d": "Talent", "dv": "Talent Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "2.798"}, {"n": "Roly Srivastava", "jt": "Associate Head of Talent Acquisition", "d": "Talent", "dv": "Talent Acquisition", "si": "Australia", "dr": "3", "im": 1, "lv": "M1.1", "st": "", "nl": "M1.2", "pt": "High Potential", "br": "Cialfo", "gn": "Female", "tn": "1.55"}, {"n": "Abhijeet Singh", "jt": "Talent Operations Specialist", "d": "Talent", "dv": "Talent Operations", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC1.2", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.556"}, {"n": "Vipul Himanshu", "jt": "Talent Acquisition Manager", "d": "Talent", "dv": "Talent Acquisition", "si": "India (North & East)", "dr": "1", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "0.821"}, {"n": "Gaurav Pawaiya", "jt": "Senior Talent Acquisition Specialist", "d": "Talent", "dv": "Talent Acquisition", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "Mid Potential", "br": "Cialfo", "gn": "Male", "tn": "0.249"}, {"n": "Josh Chong", "jt": "VP of Talent", "d": "Talent", "dv": "Talent - Leadership", "si": "Singapore", "dr": "5", "im": 1, "lv": "M4.1", "st": "", "nl": "", "pt": "High Potential", "br": "Manifest", "gn": "Male", "tn": "5.155"}, {"n": "Shubham Garg", "jt": "Global Talent Operations Manager", "d": "Talent", "dv": "Talent Operations", "si": "India (Delhi)", "dr": "2", "im": 1, "lv": "M1.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "Male", "tn": "2.776"}, {"n": "Sanjay Natekar", "jt": "IT Associate", "d": "Talent", "dv": "IT", "si": "India (Delhi)", "dr": "0", "im": 0, "lv": "IC2.1", "st": "", "nl": "", "pt": "", "br": "Cialfo", "gn": "", "tn": "0.479"}];
+
+// ── GATE ──
+function checkPass(){
+  if(document.getElementById('ginput').value==='manifest2026'){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    initAll();
+  } else {
+    document.getElementById('gerr').style.display='block';
+    document.getElementById('ginput').value='';
+    document.getElementById('ginput').focus();
+  }
+}
+function initAll(){
+  refreshLadder('lic-rows','lic-hdr',icLevels);
+  refreshLadder('lmgr-rows','lmgr-hdr',mgrLevels);
+  initAnchors();updateDR(3);calcOutput();
+  initEmpFilters();renderEmpTable();
+  initWPDepts();renderWP();renderWPSum();renderRatioBars();
+}
+
+// ── DIVISION ──
+let curDiv='gen';
+const titles={
+  'IC1.1':{cen:'Junior Associate / Associate',biz:'Junior Associate / Associate'},
+  'IC1.2':{cen:'Specialist / Senior Associate',biz:'Senior Associate'},
+  'IC2.1':{cen:'Senior Specialist',biz:'Partner / Manager'},
+  'IC2.2':{cen:'Principal Specialist / Associate Lead',biz:'Senior Partner / Senior Manager'},
+  'IC3.1':{cen:'Lead',biz:'Associate Director'},
+  'IC3.2':{cen:'Senior Lead',biz:'Director'},
+  'IC4.1':{cen:'Principal Lead',biz:'Senior Director'},
+  'IC4.2':{cen:'Senior Principal Lead',biz:'Executive / Principal Director'},
+  'M1.1':{cen:'Team Lead / Senior Team Lead / Manager',biz:'Associate Director'},
+  'M1.2':{cen:'Senior Manager / Associate Head',biz:'Director'},
+  'M2.1':{cen:'Principal Manager / Senior Associate Head',biz:'Senior Director'},
+  'M2.2':{cen:'Senior Principal Manager / Head',biz:'Executive Director'},
+  'M3.1':{cen:'Senior Head',biz:'Senior Executive Director'},
+  'M3.2':{cen:'Associate VP / General Manager',biz:'General Manager'},
+  'M4.1':{cen:'VP',biz:'Managing Director'},
+  'M4.2':{cen:'Senior VP',biz:'Senior Managing Director'},
+  'M5':{cen:'C-Level',biz:'C-Level'},
+  'M6':{cen:'Senior/Group C-Level',biz:'Senior C-Level'}
+};
+
+function setDiv(d,btn){
+  curDiv=d;
+  document.querySelectorAll('.dbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  refreshLadder('lic-rows','lic-hdr',icLevels);
+  refreshLadder('lmgr-rows','lmgr-hdr',mgrLevels);
+  calcOutput();
+}
+
+function switchView(v,btn){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  btn.classList.add('active');
+}
+function switchTrack(t,btn){
+  document.querySelectorAll('#view-ladder .tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lic-wrap').style.display=t==='ic'?'block':'none';
+  document.getElementById('lmgr-wrap').style.display=t==='mgr'?'block':'none';
+}
+
+// ── LEVEL DATA ──
+const icA={
+  scope:['Works inside one team, completes assigned tasks','Owns a small process end to end, improves one metric','Leads a cross-team task, moves a function metric','Runs a cross-org program, creates a reusable playbook','Sets company direction for operations, step-change impact'],
+  complexity:['Follows clear steps, low ambiguity','Solves routine problems, suggests small fixes','Simplifies messy flows and reduces handoffs','Designs durable processes across teams','Creates new patterns others adopt'],
+  autonomy:['Needs close help, completes assigned tasks','Self-directed on familiar work, flags risks early','Delivers end to end, manages risk proactively','Sets goals tied to strategy and shapes intake','Sets standards; zero-surprise operator'],
+  hardskills:['Basic tools and process','Executes standard work alone','Improves systems, reviews others work','Expert across areas, teaches others','Industry-level expert, invents techniques'],
+  culture:['Meets some values, needs reminders','Usually follows values, rare misses','Consistent role model, helps nearby teams','Raises the bar kindly and directly','Culture carrier under pressure'],
+  pl:['No leadership expected','Shares knowledge ad hoc','Mentors 1-2 and improves team quality','Leads by influence, upskills peers','Grows future leaders, builds practices'],
+  yoe:['0-2 years','3-5 years','6-10 years','10-14 years','15+ years']
+};
+const mgrA={
+  scope:['Leads a small pod on a simple goal','Manages a team of 5-8 with a clear charter','Leads multiple squads or managers, accountable for function OKRs','Owns a region or large function, owns budget and portfolio OKRs','Sets org strategy across regions, multi-year plan and P&L'],
+  complexity:['Plans schedule, escalates issues early','Balances scope and capacity, clears common blockers','Aligns functions and handles constraints','Designs operating model that reduces complexity','Designs org strategy for complex environments'],
+  autonomy:['Needs guidance on planning and people topics','Runs planning with oversight, maintains budget/headcount hygiene','Owns team roadmap and delivery, handles performance management','Owns resourcing, budget and cross-team dependencies','Operates like an owner for a BU/region, has successors ready'],
+  hardskills:['Basic team process and metrics','Runs planning, basic analytics, fair hiring','Sets team standards, reviews PRDs/financials','Sets functional standards, resolves tradeoffs','Cross-functional master, repeatedly hires top 10%'],
+  culture:['Meets some values, needs reminders','Usually follows values, rare misses','Consistent role model, helps nearby teams','Raises the bar kindly and directly','Culture carrier under pressure'],
+  pl:['Leads 1-3 with support','Manages 4-8, runs 1:1s, hiring','Leads managers or multiple squads','Builds bench, fixes org design','Scales function across regions, pipeline in place'],
+  yoe:['0-2 years','3-5 years','6-10 years','10-14 years','15+ years']
+};
+const icLevels=[
+  {code:'IC1.1',scope:'Delivers tasks within one pod. No external dependencies.',complexity:'Follows SOPs with low ambiguity.',autonomy:'Needs close guidance. Escalates early.',hard:'Basic tools and process.',culture:'Meets some values, needs occasional reminders.',pl:'Not expected.',yoe:'0-2 years',ex:'Resolved 10 support tickets with minimal direction.'},
+  {code:'IC1.2',scope:'Owns a contained feature or process. Minor impact (approx 3% metric).',complexity:'Solves routine issues using known patterns.',autonomy:'Self-directed on familiar work. Flags risks early.',hard:'Executes standard work independently.',culture:'Usually follows values with rare misses.',pl:'Not expected.',yoe:'3-5 years',ex:'Took ownership of the returns process, cut handling time by 5%.'},
+  {code:'IC2.1',scope:'Leads a feature or process end-to-end. Improves team KPI by at least 5%.',complexity:'Simplifies messy flows and reduces handoffs.',autonomy:'Delivers end-to-end. Proactively manages risk. Resolves cross-team blockers.',hard:'Improves systems, reviews others work.',culture:'Consistent role model who helps nearby teams.',pl:'May coach a junior. Not accountable for people outcomes.',yoe:'3-5 years',ex:'Cut handoffs from 4 to 2 steps. Error rate dropped 30%.'},
+  {code:'IC2.2',scope:'Drives a cross-team workflow. Moves a function OKR by approx 10%.',complexity:'Tackles ambiguous, multi-system problems. Sets evaluation criteria.',autonomy:'Operates with minimal oversight. Coordinates stakeholders across functions.',hard:'Expert in area. Teaches others.',culture:'Raises the bar kindly and directly.',pl:'Informal mentoring. Assists with hiring signals.',yoe:'6-10 years',ex:'Created a standard playbook for escalations. Time to resolve dropped 25%.',mgrNote:'IC2.2 is the minimum eligibility for transition to M1.1.'},
+  {code:'IC3.1',scope:'Leads initiatives across at least 2 teams. Creates a reusable playbook. Sustained impact.',complexity:'Sets goals aligned to strategy. Shapes upstream demand. Designs resilient systems.',autonomy:'Zero-surprise operator. Others plan around them.',hard:'Expert across multiple areas. Teaches and upskills peers.',culture:'Culture carrier. Raises bar broadly.',pl:'Leads communities of practice. No formal DRs required.',yoe:'6-10 years',ex:'Redesigned fulfillment model. Cost per ticket down 35% YoY.',mgrNote:'IC3.1 is the preferred entry point for M1.1. Leadership by influence already demonstrated.'},
+  {code:'IC3.2',scope:'Company-critical initiative adopted across functions. Material P&L impact.',complexity:'Tames unknown unknowns. Defines org-wide paradigms.',autonomy:'Owner mindset, accountable without supervision.',hard:'Sets domain strategy. Bar-raiser across hiring and standards.',culture:'Culture carrier under pressure. Cross-org influence.',pl:'Advises senior managers. Coaches broadly.',yoe:'10-14 years',ex:'Set global ops strategy, created 3-year plan across regions.'},
+  {code:'IC4.1',scope:'Domain authority. Sets domain strategy. Step-change outcomes over multiple quarters.',complexity:'Architect of patterns used company-wide.',autonomy:'Sets standards. Stewards multi-year roadmap outcomes.',hard:'Industry-level expertise. Invents techniques.',culture:'Culture setter and defender at scale.',pl:'Influences org design. Raises hiring bar across company.',yoe:'15+ years',ex:'Co-authored internal automation library adopted by 4 teams.'},
+  {code:'IC4.2',scope:'Enterprise-level impact across regions/BUs. Strategy others follow.',complexity:'Solves hardest ambiguous problems. Sets principles.',autonomy:'Board/ELT accountability for outcomes.',hard:'Industry-level thought leadership. Paradigm shifts.',culture:'Culture carrier and setter at enterprise scale.',pl:'Mentors VPs/Directors. Shapes culture at scale.',yoe:'15+ years',ex:'Set enterprise patterns. Multi-region strategy with repeated wins.'}
+];
+const mgrLevels=[
+  {code:'M1.1',scope:'Accountable for team OKRs, achieves at least 80%.',complexity:'Balances scope/resources. Resolves blockers without escalation.',autonomy:'Runs planning/retros. Owns 1:1s/feedback.',hard:'Runs planning, basic analytics, fair hiring.',culture:'Consistent role model.',pl:'Manages 2-5 directs. Builds performance rhythm.',yoe:'6-10 years',ex:'Managed a team of 6, achieved 85% of team OKRs.'},
+  {code:'M1.2',scope:'Improves 1-2 core team KPIs. Removes systemic blockers.',complexity:'Orchestrates across functions. Sets team evaluation criteria.',autonomy:'Owns team roadmap and delivery. Performance management end-to-end.',hard:'Sets team standards. Reviews PRDs/financials.',culture:'Raises the bar kindly and directly.',pl:'Manages 6-12 directs. Runs hiring loop.',yoe:'10-14 years',ex:'Leads 2 leads across shifts. Function SLA improved 10%.'},
+  {code:'M2.1',scope:'Function-level OKRs, at least 85% attainment. Repeatable capability.',complexity:'Designs operating model. Reduces handoffs/complexity.',autonomy:'Owns budget/headcount for area. Medium P&L responsibility.',hard:'Sets functional standards. Resolves complex tradeoffs.',culture:'Culture carrier under pressure.',pl:'Leads leads. Succession plan for team leads.',yoe:'10-14 years',ex:'Owns India Ops, budget, vendor performance. CSAT +12pts.'},
+  {code:'M2.2',scope:'Portfolio outcomes across programs. Improves 2+ core KPIs.',complexity:'Sets functional standards. Evaluates complex tradeoffs.',autonomy:'Owner for budget and dependencies. Cross-team risk management.',hard:'Sets functional standards across the area.',culture:'Cross-org culture setter.',pl:'Leads managers of managers. Diversity and hiring targets on track.',yoe:'15+ years',ex:'Moved org to hub-and-spoke model. Escalations down 45%.'},
+  {code:'M3.1',scope:'At least 90% OKR attainment. Material movement in quality/cost/speed.',complexity:'Architects org design. Scalable playbooks adopted widely.',autonomy:'Owns full budget. Shapes upstream demand.',hard:'Sets enterprise standards.',culture:'Enterprise-level culture carrier.',pl:'Leads VPs/Directors. Shapes culture and bar across org.',yoe:'15+ years',ex:'Set global ops strategy, 3-year plan across regions.'},
+  {code:'M3.2',scope:'Multi-quarter strategy. Hits revenue/efficiency goals.',complexity:'Solves abstract cross-domain issues consistently.',autonomy:'Board/ELT visibility. Owns risks and compliance.',hard:'Cross-functional mastery.',culture:'Enterprise culture carrier and setter.',pl:'Leads executives. Builds next-gen leadership bench.',yoe:'15+ years',ex:'Multi-quarter strategy. Material P&L movement.'},
+  {code:'M4.1',scope:'Exec owner for a region/function. Company-level step changes.',complexity:'Sets enterprise patterns. Steers multi-year bets.',autonomy:'Full P&L stewardship. Capital allocation decisions.',hard:'Enterprise-scale authority.',culture:'Culture-setter at enterprise scale.',pl:'Succession pipeline across VP layer.',yoe:'15+ years',ex:'Exec owner for region with broad organisational span.'},
+  {code:'M4.2',scope:'Enterprise-scale exec. Multiple regions/functions. Repeated enterprise wins.',complexity:'Defines operating model company-wide. Crisis leadership.',autonomy:'Owns multi-year plan. Investor/board metrics.',hard:'Industry-level leadership.',culture:'Enterprise culture architect.',pl:'Leads executives at scale. Develops CEOs.',yoe:'15+ years',ex:'Sustained multi-region strategy execution.'},
+  {code:'M5',scope:'Sets strategy, portfolio and capital allocation across company.',complexity:'Solves hardest ambiguous problems. Sets principles.',autonomy:'CEO/ELT accountability for outcomes.',hard:'Industry-level thought leadership.',culture:'Company culture founder and carrier.',pl:'Stewards culture at group scale.',yoe:'15+ years',ex:'Company executive with enterprise scope.'},
+  {code:'M6',scope:'Multi-company strategy. M&A. New market creation.',complexity:'Industry-level paradigm shifts.',autonomy:'Board accountability across companies.',hard:'Industry paradigm setter.',culture:'Cross-company culture setter.',pl:'Board accountability. Develops company-level leaders.',yoe:'15+ years',ex:'Group/holding leadership with cross-company mandate.'}
+];
+
+// ── LADDER ──
+function refreshLadder(rowsId,hdrId,levels){
+  const hdr=document.getElementById(hdrId);
+  const c=document.getElementById(rowsId);
+  let cls,cols;
+  if(curDiv==='ops'){cls='ops';cols=['Level','Central title (Central)','Scope snapshot',''];}
+  else if(curDiv==='csl'){cls='csl';cols=['Level','Business title (Business)','Scope snapshot',''];}
+  else{cls='gen';cols=['Level','Central title (Central)','Business title (Business)','Scope snapshot',''];}
+  hdr.className='lhdr-'+cls;
+  hdr.innerHTML=cols.map(c=>`<span>${c}</span>`).join('');
+  c.innerHTML='';
+  levels.forEach(lvl=>{
+    const t=titles[lvl.code]||{cen:'',biz:''};
+    const r=document.createElement('div');r.className='lrow';
+    let top;
+    if(curDiv==='ops') top=`<div class="ltop-ops" onclick="this.parentElement.classList.toggle('open')"><span class="lcode">${lvl.code}</span><span class="lcen">${t.cen}</span><span class="lscope">${lvl.scope}</span><span class="chv"></span></div>`;
+    else if(curDiv==='csl') top=`<div class="ltop-csl" onclick="this.parentElement.classList.toggle('open')"><span class="lcode">${lvl.code}</span><span class="lbiz">${t.biz}</span><span class="lscope">${lvl.scope}</span><span class="chv"></span></div>`;
+    else top=`<div class="ltop-gen" onclick="this.parentElement.classList.toggle('open')"><span class="lcode">${lvl.code}</span><span class="lcen">${t.cen}</span><span class="lbiz">${t.biz}</span><span class="lscope">${lvl.scope}</span><span class="chv"></span></div>`;
+    r.innerHTML=top+`<div class="ldet"><div><div class="dl">Complexity</div><div class="dt">${lvl.complexity}</div><div class="dl" style="margin-top:11px">Autonomy &amp; Ownership</div><div class="dt">${lvl.autonomy}</div></div><div><div class="dl">Hard Skills</div><div class="dt">${lvl.hard}</div><div class="dl" style="margin-top:11px">People Leadership</div><div class="dt">${lvl.pl}</div></div><div><div class="dl">Culture</div><div class="dt">${lvl.culture}</div><div class="dl" style="margin-top:11px">Typical YoE</div><div class="dt">${lvl.yoe}</div><div class="dex">${lvl.ex}</div>${lvl.mgrNote?`<div class="mnote"><strong>Manager transition note</strong>${lvl.mgrNote}</div>`:''}</div></div>`;
+    c.appendChild(r);
+  });
+}
+
+// ── MANAGER SPLIT & CALIBRATION ──
+let calcTrack='ic', drCnt=3;
+const sc={scope:3,complexity:3,autonomy:3,hardskills:3,culture:3,pl:3,yoe:3};
+
+// DR profile: weights for criteria + output MULTIPLIER to compress manager level output
+// multiplier compresses the final avg so lean managers can't land at M5 with all-3s
+function drProfile(dr){
+  dr=parseInt(dr);
+  if(dr===1)  return{pct:15,lbl:'Nominal Manager (1 DR)',desc:'Primarily assessed as a senior IC with a formal line management title. PL is a minor factor.',w:{scope:1,complexity:1.1,autonomy:1.1,hardskills:1.1,culture:1,pl:0.25,yoe:1},mult:0.45};
+  if(dr===2)  return{pct:25,lbl:'Lean Manager (2 DRs)',desc:'Still primarily IC-assessed. Hard Skills and Complexity carry more weight than PL.',w:{scope:1,complexity:1.05,autonomy:1.05,hardskills:1.05,culture:1,pl:0.45,yoe:1},mult:0.52};
+  if(dr<=4)   return{pct:45,lbl:'Hybrid Manager (3-4 DRs)',desc:'Balanced. IC depth and people leadership carry equal weight.',w:{scope:1,complexity:0.9,autonomy:0.9,hardskills:0.9,culture:1,pl:1.0,yoe:1},mult:0.72};
+  if(dr<=7)   return{pct:60,lbl:'Manager-Primary (5-7 DRs)',desc:'People Leadership and Scope dominate. IC criteria carry reduced weight.',w:{scope:1,complexity:0.75,autonomy:0.9,hardskills:0.75,culture:1,pl:1.3,yoe:1},mult:0.88};
+  return{pct:75,lbl:'Full Manager (8+ DRs)',desc:'Assessment dominated by leadership, team outcomes, and organisational scope.',w:{scope:1,complexity:0.6,autonomy:0.85,hardskills:0.6,culture:1,pl:1.5,yoe:1},mult:1.0};
+}
+// VERIFY: all-3s, 1 DR:
+// keys=scope,complexity,autonomy,hardskills,culture,pl,yoe
+// w=   1,    1.1,      1.1,     1.1,       1,    0.25, 1
+// wval=3(1+1.1+1.1+1.1+1+0.25+1)=3*7.55=22.65, wsum=7.55, avg=3.0, *mult(0.45)=1.35 -> M1.1 ✓
+
+const icMap=[
+  {min:1,max:1.49,code:'IC1.1',desc:'Entry-level. Executes well-defined tasks with close guidance.'},
+  {min:1.5,max:1.99,code:'IC1.2',desc:'Emerging performer. Owns a contained process. Minor metric impact.'},
+  {min:2,max:2.49,code:'IC2.1',desc:'Solid IC. Leads a process end-to-end. Improves team KPI at least 5%.'},
+  {min:2.5,max:2.99,code:'IC2.2',desc:'Senior IC. Drives cross-team workflows. Minimum for Manager track.'},
+  {min:3,max:3.49,code:'IC3.1',desc:'Staff-level IC. Leads multi-team initiatives. Creates reusable playbooks.'},
+  {min:3.5,max:3.99,code:'IC3.2',desc:'Principal-level IC. Shapes function direction. Material P&L impact.'},
+  {min:4,max:4.49,code:'IC4.1',desc:'Domain authority. Sets domain strategy. Step-change outcomes.'},
+  {min:4.5,max:5,code:'IC4.2',desc:'Enterprise-level impact across regions and BUs.'}
+];
+const mgrMap=[
+  {min:1,max:1.49,code:'M1.1',desc:'New people manager. Team of 2-5. Achieves at least 80% team OKRs.'},
+  {min:1.5,max:1.99,code:'M1.2',desc:'Experienced manager. Improves 1-2 core team KPIs. Removes systemic blockers.'},
+  {min:2,max:2.49,code:'M2.1',desc:'Manager of managers. Function-level OKRs, at least 85% attainment.'},
+  {min:2.5,max:2.99,code:'M2.2',desc:'Large multi-team leader. Portfolio outcomes. Improves 2+ core KPIs.'},
+  {min:3,max:3.49,code:'M3.1',desc:'Function/region head. At least 90% OKR attainment.'},
+  {min:3.5,max:3.99,code:'M3.2',desc:'Business owner for a major unit or country P&L.'},
+  {min:4,max:4.49,code:'M4.1',desc:'Exec owner for a region/function. Company-level step changes.'},
+  {min:4.5,max:4.89,code:'M4.2',desc:'Enterprise-scale exec. Multiple regions/functions.'},
+  {min:4.9,max:5,code:'M5',desc:'Company executive. Sets strategy, portfolio and capital allocation.'}
+];
+
+function updateDR(v){
+  drCnt=parseInt(v);
+  document.getElementById('dr-count').textContent=v;
+  const p=drProfile(v);
+  const mPct=p.pct;
+  document.getElementById('sbm').style.width=mPct+'%';
+  document.getElementById('sbi').style.width=(100-mPct)+'%';
+  document.getElementById('sbm').textContent=mPct>8?mPct+'% Mgmt':'';
+  document.getElementById('sbi').textContent=(100-mPct)>8?(100-mPct)+'% IC':'';
+  document.getElementById('sprof').innerHTML=`<strong>${p.lbl}:</strong> ${p.desc}`;
+  updateWeightLabels();calcOutput();
+}
+function updateWeightLabels(){
+  ['scope','complexity','autonomy','hardskills','culture','pl','yoe'].forEach(k=>{
+    const el=document.getElementById('w-'+k);if(!el)return;
+    if(calcTrack!=='mgr'){el.textContent='';el.className='sw';return;}
+    const p=drProfile(drCnt);
+    const w=p.w[k]||1;
+    if(w>=1.2){el.textContent='high weight';el.className='sw wh';}
+    else if(w>=1.05){el.textContent='weighted up';el.className='sw wh';}
+    else if(w<=0.5){el.textContent='low weight';el.className='sw wl';}
+    else if(w<=0.8){el.textContent='weighted down';el.className='sw wl';}
+    else{el.textContent='';el.className='sw';}
+  });
+}
+function switchCalcTrack(t,btn){
+  calcTrack=t;
+  document.querySelectorAll('#view-hiring .tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pl-row').style.display=t==='mgr'?'block':'none';
+  document.getElementById('ms-sec').style.display=t==='mgr'?'block':'none';
+  initAnchors();updateWeightLabels();calcOutput();
+}
+function updateCalc(k,v){
+  sc[k]=parseInt(v);
+  document.getElementById('v-'+k).textContent=v;
+  const A=calcTrack==='ic'?icA:mgrA;
+  const el=document.getElementById('a-'+k);
+  if(el)el.textContent=A[k][parseInt(v)-1]||'';
+  calcOutput();
+}
+function initAnchors(){
+  const A=calcTrack==='ic'?icA:mgrA;
+  ['scope','complexity','autonomy','hardskills','culture','pl','yoe'].forEach(k=>{
+    const el=document.getElementById('a-'+k);
+    if(el)el.textContent=A[k][sc[k]-1]||'';
+  });
+}
+function calcOutput(){
+  let avg;
+  if(calcTrack==='ic'){
+    const keys=['scope','complexity','autonomy','hardskills','culture','yoe'];
+    avg=keys.reduce((s,k)=>s+sc[k],0)/keys.length;
+  } else {
+    const p=drProfile(drCnt);
+    const keys=['scope','complexity','autonomy','hardskills','culture','pl','yoe'];
+    let wv=0,ws=0;
+    keys.forEach(k=>{const w=p.w[k]||1;wv+=sc[k]*w;ws+=w;});
+    // Apply DR multiplier to compress output range for lean managers
+    // At mult=0.45: all-3s gives 3*0.45=1.35 -> M1.1 ✓
+    // At mult=1.0: all-5s gives 5*1.0=5.0 -> M5 ✓
+    avg=(wv/ws)*p.mult;
+    // clamp to 1-5
+    avg=Math.max(1,Math.min(5,avg));
+  }
+  const map=calcTrack==='ic'?icMap:mgrMap;
+  const m=map.find(l=>avg>=l.min&&avg<=l.max)||map[map.length-1];
+  document.getElementById('out-level').textContent=m.code;
+  const t=titles[m.code]||{cen:'',biz:''};
+  const tb=document.getElementById('out-title');
+  if(curDiv==='ops') tb.innerHTML=`<div class="ctrow"><span class="ctmain">${t.cen}</span><span class="cttag">Central</span></div>`;
+  else if(curDiv==='csl') tb.innerHTML=`<div class="ctrow"><span class="ctmain">${t.biz}</span><span class="cttag">Business</span></div>`;
+  else tb.innerHTML=`<div class="ctrow"><span class="ctmain">${t.cen}</span><span class="cttag">Central</span></div>${t.biz!==t.cen?`<div class="ctalt">${t.biz} <span class="ctalttag">Business</span></div>`:''}`;
+  let note=m.desc;
+  if(calcTrack==='mgr'){const p=drProfile(drCnt);note+=` | ${p.lbl} | Adj. avg: ${avg.toFixed(2)}`;}
+  else note+=` | Avg: ${avg.toFixed(2)}`;
+  document.getElementById('out-desc').textContent=note;
+}
+
+// ── GROWTH PANELS ──
+const critDefs=[{k:'scope',l:'Scope &amp; Impact'},{k:'complexity',l:'Complexity'},{k:'autonomy',l:'Autonomy &amp; Ownership'},{k:'hard',l:'Hard Skills'},{k:'culture',l:'Culture &amp; Behaviors'},{k:'pl',l:'People Leadership'},{k:'yoe',l:'Years of Experience'}];
+const icTr=icLevels.slice(0,-1).map((l,i)=>({cur:l,nxt:icLevels[i+1],type:'ic'}));
+const i2mTr=[{cur:icLevels.find(l=>l.code==='IC2.2'),nxt:mgrLevels[0],type:'i2m',from:'IC2.2'},{cur:icLevels.find(l=>l.code==='IC3.1'),nxt:mgrLevels[0],type:'i2m',from:'IC3.1'}];
+const mgrTr=mgrLevels.slice(0,-1).map((l,i)=>({cur:l,nxt:mgrLevels[i+1],type:'mgr'}));
+const panelsEl=document.getElementById('growth-panels');
+let pIdx=0;
+function mkGrowthSection(trs,pillsEl){
+  trs.forEach(t=>{
+    const pill=document.createElement('button');pill.className='gpill';
+    pill.textContent=t.type==='i2m'?`IC (${t.from}) to M1.1`:`${t.cur.code} to ${t.nxt.code}`;
+    const idx=pIdx;
+    pill.onclick=()=>{document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.gpanel').forEach(p=>p.classList.remove('active'));pill.classList.add('active');document.getElementById('gp-'+idx).classList.add('active');};
+    pillsEl.appendChild(pill);
+    const crits=critDefs.map(({k,l})=>{const now=t.cur[k],nxt=t.nxt[k];if(!now||!nxt||now===nxt)return'';return`<div class="gcrit"><div class="gcrit-name">${l}</div><div class="g2col"><div class="gb now"><div class="gbl">At ${t.cur.code}</div><p>${now}</p></div><div class="gb nxt"><div class="gbl" style="color:rgba(255,255,255,.4)">At ${t.nxt.code}</div><p>${nxt}</p></div></div></div>`;}).filter(Boolean).join('');
+    let extra='';
+    if(t.type==='i2m') extra=`<div class="mgbox"><h4>IC to Manager transition — not a standard level step</h4><p>You are moving into a fundamentally different role where success is measured through your team's outcomes. Requires IC2.2 capability minimum, readiness for performance accountability, a team to lead, and endorsement from your manager and the People team.</p><div class="lvtags"><span class="lvtag">IC2.2 minimum</span><span class="lvtag">IC3.1 preferred</span><span class="lvtag no">IC2.1 or below: not eligible</span></div></div>`;
+    else if(t.nxt&&t.nxt.mgrNote) extra=`<div class="mnote" style="margin-top:14px"><strong>Manager transition note</strong>${t.nxt.mgrNote}</div>`;
+    const tn=titles[t.cur.code]?titles[t.cur.code].cen:'';
+    const tnn=titles[t.nxt.code]?titles[t.nxt.code].cen:'';
+    const panel=document.createElement('div');panel.className='gpanel';panel.id='gp-'+idx;
+    panel.innerHTML=`<div class="gphdr"><div class="gpfrom">${t.type==='i2m'?'IC to Manager transition':'Level transition'}</div><h3>${t.cur.code}: ${tn}</h3><div class="gpnxt">Next: ${t.nxt.code} · ${tnn}</div></div><div class="gpbody"><p style="font-size:13px;color:var(--md);margin-bottom:18px;line-height:1.55">Criteria that stay the same are not shown.</p>${crits}${extra}<div class="gex" style="margin-top:14px"><div class="dl">Example at ${t.nxt.code}</div><p>${t.nxt.ex||''}</p></div></div>`;
+    panelsEl.appendChild(panel);pIdx++;
+  });
+}
+mkGrowthSection(icTr,document.getElementById('gpills-ic'));
+mkGrowthSection(i2mTr,document.getElementById('gpills-i2m'));
+mkGrowthSection(mgrTr,document.getElementById('gpills-mgr'));
+const fp=document.querySelector('#gpills-ic .gpill');
+if(fp){fp.classList.add('active');document.getElementById('gp-0').classList.add('active');}
+
+// ── EMPLOYEE TABLE ──
+function lvPillClass(lv){
+  if(!lv||lv==='Not leveled')return'none';
+  const p=lv.toLowerCase();
+  if(p.startsWith('ic1'))return'ic1';
+  if(p.startsWith('ic2'))return'ic2';
+  if(p.startsWith('ic3'))return'ic3';
+  if(p.startsWith('ic4'))return'ic4';
+  if(p.startsWith('m1'))return'm1';
+  if(p.startsWith('m2'))return'm2';
+  if(p.startsWith('m3'))return'm3';
+  if(p.startsWith('m4')||p==='m5'||p==='m6')return'm4';
+  return'none';
+}
+function initEmpFilters(){
+  const depts=[...new Set(EMPDATA.map(e=>e.d).filter(Boolean))].sort();
+  const levels=[...new Set(EMPDATA.map(e=>e.lv).filter(Boolean))].sort();
+  const ds=document.getElementById('emp-dept');
+  depts.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;ds.appendChild(o);});
+  const ls=document.getElementById('emp-level');
+  levels.forEach(l=>{const o=document.createElement('option');o.value=l;o.textContent=l||'Not leveled';ls.appendChild(o);});
+}
+function renderEmpTable(){
+  const q=(document.getElementById('emp-search').value||'').toLowerCase();
+  const dept=document.getElementById('emp-dept').value;
+  const lev=document.getElementById('emp-level').value;
+  const mgr=document.getElementById('emp-mgr').value;
+  let rows=EMPDATA.filter(e=>{
+    if(q&&!((e.n||'').toLowerCase().includes(q)||(e.jt||'').toLowerCase().includes(q)))return false;
+    if(dept&&e.d!==dept)return false;
+    if(lev&&e.lv!==lev)return false;
+    if(mgr==='1'&&e.im!==1)return false;
+    if(mgr==='0'&&e.im!==0)return false;
+    return true;
+  });
+  document.getElementById('emp-count').textContent=`Showing ${rows.length} of ${EMPDATA.length} full-time employees`;
+  const tb=document.getElementById('emp-tbody');
+  tb.innerHTML=rows.slice(0,200).map(e=>`<tr><td>${e.im?`<span class="mgr-dot"></span>`:''}${e.n||''}</td><td style="color:var(--md);font-size:12px">${e.jt||''}</td><td>${e.d||''}</td><td style="color:var(--md);font-size:12px">${e.dv||''}</td><td style="color:var(--md);font-size:12px">${e.si||''}</td><td><span class="lv-pill ${lvPillClass(e.lv)}">${e.lv||'—'}</span></td><td style="text-align:center;color:var(--md)">${e.dr||'0'}</td><td style="color:var(--md);font-size:12px">${e.st||'—'}</td></tr>`).join('');
+}
+function clearEmpFilters(){
+  document.getElementById('emp-search').value='';
+  document.getElementById('emp-dept').value='';
+  document.getElementById('emp-level').value='';
+  document.getElementById('emp-mgr').value='';
+  renderEmpTable();
+}
+
+// ── WORKFORCE PLANNING (from real data) ──
+const wpBench={'IC Entry (IC1.x)':{b:25},'IC Mid (IC2.x)':{b:35},'IC Senior (IC3.x+)':{b:20},'Manager M1.x':{b:12},'Manager M2.x+':{b:8}};
+function empBand(lv){
+  if(!lv)return null;
+  const l=lv.toLowerCase();
+  if(l==='ic1.1'||l==='ic1.2')return'IC Entry (IC1.x)';
+  if(l==='ic2.1'||l==='ic2.2')return'IC Mid (IC2.x)';
+  if(l.startsWith('ic3')||l.startsWith('ic4'))return'IC Senior (IC3.x+)';
+  if(l==='m1.1'||l==='m1.2')return'Manager M1.x';
+  if(l.startsWith('m'))return'Manager M2.x+';
+  return null;
+}
+// Build actual data from EMPDATA
+function buildActualWP(){
+  const deptBand={};
+  EMPDATA.forEach(e=>{
+    const d=e.d||'Unknown';
+    const b=empBand(e.lv);
+    if(!b)return;
+    if(!deptBand[d])deptBand[d]={};
+    deptBand[d][b]=(deptBand[d][b]||0)+1;
+  });
+  const rows=[];
+  Object.keys(deptBand).sort().forEach(dept=>{
+    Object.keys(wpBench).forEach(band=>{
+      rows.push({dept,band,actual:deptBand[dept][band]||0});
+    });
+  });
+  return rows;
+}
+let wpData=buildActualWP();
+function resetWP(){wpData=buildActualWP();renderWP();renderWPSum();renderRatioBars();}
+function initWPDepts(){
+  const sel=document.getElementById('wp-dept');
+  const depts=[...new Set(wpData.map(r=>r.dept))].sort();
+  depts.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});
+}
+function deptTotal(dept){return wpData.filter(r=>r.dept===dept).reduce((s,r)=>s+r.actual,0);}
+function renderWP(){
+  const filter=document.getElementById('wp-dept').value;
+  const rows=filter==='all'?wpData:wpData.filter(r=>r.dept===filter);
+  const tb=document.getElementById('wp-tbody');tb.innerHTML='';
+  rows.forEach(row=>{
+    const dt=deptTotal(row.dept)||1;
+    const b=wpBench[row.band]||{b:20};
+    const tgt=Math.round(b.b/100*dt);
+    const gap=row.actual-tgt;
+    let bc='ok',bl='On track',bs='✓';
+    if(gap<=-2){bc='crit';bl='Need '+Math.abs(gap)+' more';bs='▼';}
+    else if(gap<0){bc='warn';bl='Short by '+Math.abs(gap);bs='!';}
+    else if(gap>3){bc='over';bl='+'+gap+' above target';bs='▲';}
+    const origIdx=wpData.findIndex(r=>r.dept===row.dept&&r.band===row.band);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:500">${row.dept}</td><td>${row.band}</td><td><input type="number" min="0" max="999" value="${row.actual}" data-i="${origIdx}" onchange="wpUpd(this)" style="width:60px"></td><td style="color:var(--md)">${b.b}%</td><td style="color:var(--md)">${tgt}</td><td style="font-weight:600;color:${gap<0?'var(--rd)':gap>3?'var(--md)':'var(--gn)'}">${gap>=0?'+':''}${gap}</td><td><span class="gbadge ${bc}">${bs} ${bl}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+function wpUpd(inp){const i=parseInt(inp.dataset.i);if(!isNaN(i))wpData[i].actual=parseInt(inp.value)||0;renderWPSum();renderRatioBars();}
+function renderWPSum(){
+  const total=EMPDATA.length;
+  const ic=EMPDATA.filter(e=>e.lv&&e.lv.toLowerCase().startsWith('ic')).length;
+  const mgr=EMPDATA.filter(e=>e.lv&&e.lv.toLowerCase().startsWith('m')).length;
+  const senior=EMPDATA.filter(e=>{const l=(e.lv||'').toLowerCase();return l.startsWith('ic3')||l.startsWith('ic4');}).length;
+  let gaps=0;
+  const allDepts=[...new Set(wpData.map(r=>r.dept))];
+  allDepts.forEach(d=>{const dt=deptTotal(d)||1;wpData.filter(r=>r.dept===d).forEach(row=>{const t=Math.round((wpBench[row.band]?.b||20)/100*dt);if(row.actual<t)gaps+=t-row.actual;});});
+  document.getElementById('wp-sum').innerHTML=`
+    <div class="wpc hl"><div class="wpl">Full-time headcount</div><div class="wpn">${total}</div><div class="wps">January 2026 data</div></div>
+    <div class="wpc"><div class="wpl">IC headcount</div><div class="wpn">${ic}</div><div class="wps">${Math.round(ic/total*100)}% of total</div></div>
+    <div class="wpc"><div class="wpl">Manager headcount</div><div class="wpn">${mgr}</div><div class="wps">${Math.round(mgr/total*100)}% of total</div></div>
+    <div class="wpc"><div class="wpl">Senior IC (IC3+)</div><div class="wpn">${senior}</div><div class="wps">${Math.round(senior/ic*100)}% of IC headcount</div></div>
+    <div class="wpc" style="${gaps>10?'border-color:var(--rd)':''}"><div class="wpl">Leveling gaps</div><div class="wpn" style="${gaps>10?'color:var(--rd)':''}">${gaps}</div><div class="wps">headcount below benchmark</div></div>`;
+  // Insights
+  const ins=[];
+  allDepts.forEach(d=>{
+    const dt=deptTotal(d);if(!dt)return;
+    wpData.filter(r=>r.dept===d).forEach(row=>{
+      const t=Math.round((wpBench[row.band]?.b||20)/100*dt),g=row.actual-t;
+      if(g<=-2)ins.push({type:'crit',msg:`${d} needs ${Math.abs(g)} more at ${row.band} (current ${row.actual}, target ${t})`});
+      if(g>=4)ins.push({type:'over',msg:`${d} is ${g} above target at ${row.band} (current ${row.actual}, target ${t})`});
+    });
+    const icR=EMPDATA.filter(e=>e.d===d&&e.lv&&e.lv.toLowerCase().startsWith('ic')).length;
+    const mR=EMPDATA.filter(e=>e.d===d&&e.lv&&e.lv.toLowerCase().startsWith('m')).length;
+    if(mR>0&&icR/mR<3)ins.push({type:'warn',msg:`${d} has a low IC/Manager ratio (${icR}:${mR}). Leadership density may be high relative to team size.`});
+  });
+  document.getElementById('wp-insights').innerHTML=ins.length?ins.map(i=>`<div style="padding:11px 14px;margin-bottom:8px;border-radius:var(--rs);font-size:13px;line-height:1.55;${i.type==='crit'?'background:var(--rdl);border-left:3px solid var(--rd)':i.type==='over'?'background:var(--lt);border-left:3px solid var(--md)':'background:var(--aml);border-left:3px solid #c8a000'}">${i.msg}</div>`).join(''):'<p style="font-size:13px;color:var(--md)">No significant gaps detected.</p>';
+}
+function renderRatioBars(){
+  const depts=[...new Set(EMPDATA.map(e=>e.d).filter(Boolean))].sort();
+  const tgtMgr=wpBench['Manager M1.x'].b+wpBench['Manager M2.x+'].b;
+  document.getElementById('ratio-bars').innerHTML=depts.map(d=>{
+    const tot=EMPDATA.filter(e=>e.d===d).length;if(!tot)return'';
+    const mP=Math.round(EMPDATA.filter(e=>e.d===d&&e.lv&&e.lv.toLowerCase().startsWith('m')).length/tot*100);
+    return`<div class="rb-row"><span class="rb-label" title="${d}">${d}</span><div class="rb-track"><div class="rb-fill" style="width:${Math.min(mP,100)}%"><span>${mP>10?mP+'%':''}</span></div><div class="rb-target" style="left:${tgtMgr}%"></div></div><span class="rb-stat">${mP}% mgr · ${100-mP}% IC <span style="color:var(--am);font-size:9px">(target ~${tgtMgr}%)</span></span></div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
