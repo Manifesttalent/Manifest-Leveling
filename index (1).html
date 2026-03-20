@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manifest Global · Career Leveling Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#000;--dark:#202020;--mid:#767676;--light:#F5F5F5;--white:#fff;--border:rgba(0,0,0,0.1);--bs:rgba(0,0,0,0.22);--r:8px;--rs:4px;--green:#1a7a4a;--green-light:#e6f4ec;--amber:#8a6d00;--amber-light:#fff8e1;--red:#c0392b;--red-light:#fdf0ee}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--black);font-size:14px;line-height:1.6;min-height:100vh}
+
+/* GATE */
+#gate{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;z-index:1000;flex-direction:column;gap:28px}
+#gate img{width:130px;filter:invert(1);opacity:.9}
+#gbox{background:var(--white);padding:36px;width:100%;max-width:360px;border-radius:var(--r)}
+#gbox h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:6px}
+#gbox p{font-size:13px;color:var(--mid);margin-bottom:20px}
+#gbox input[type=password]{width:100%;padding:11px 13px;border:1px solid var(--bs);border-radius:var(--rs);font-size:14px;font-family:'Inter',sans-serif;margin-bottom:10px;outline:none;transition:border-color .15s}
+#gbox input[type=password]:focus{border-color:var(--black)}
+#gbox button{width:100%;padding:11px;background:var(--black);color:var(--white);border:none;border-radius:var(--rs);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer}
+#gbox button:hover{background:var(--dark)}
+#gerr{font-size:12px;color:#cc0000;margin-top:8px;display:none}
+#app{display:none}
+
+/* HEADER */
+.hdr{background:var(--black);color:var(--white);padding:0 32px;display:flex;align-items:center;justify-content:space-between;min-height:64px;border-bottom:1px solid rgba(255,255,255,.08)}
+.hdr-l{display:flex;align-items:center;gap:20px}
+.hdr-logo{height:24px;filter:invert(1);opacity:.9}
+.hdr-sep{width:1px;height:18px;background:rgba(255,255,255,.2)}
+.hdr-title{font-size:13px;font-weight:500;color:rgba(255,255,255,.6)}
+.hdr-badge{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:3px 8px;border:1px solid rgba(255,255,255,.12);border-radius:3px}
+
+/* HERO */
+.hero{background:var(--black);color:var(--white);padding:48px 32px 44px;border-bottom:1px solid var(--border)}
+.heye{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,48px);font-weight:400;line-height:1.1;margin-bottom:14px;max-width:600px}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.45)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.5);max-width:500px;line-height:1.65}
+
+/* DIV BAR */
+.dbar{background:var(--light);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dlbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);margin-right:4px;white-space:nowrap}
+.dbtn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--bs);background:var(--white);color:var(--mid);transition:all .15s;font-family:'Inter',sans-serif;white-space:nowrap}
+.dbtn:hover{border-color:var(--black);color:var(--black)}
+.dbtn.active{background:var(--black);border-color:var(--black);color:var(--white)}
+
+/* NAV */
+.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;display:flex;overflow-x:auto;position:sticky;top:0;z-index:100}
+.ntab{padding:14px 16px;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;border:none;border-bottom:2.5px solid transparent;background:none;white-space:nowrap;transition:all .15s;font-family:'Inter',sans-serif}
+.ntab:hover{color:var(--black)}
+.ntab.active{color:var(--black);border-bottom-color:var(--black)}
+
+/* LAYOUT */
+.main{max-width:1080px;margin:0 auto;padding:44px 32px}
+.view{display:none}
+.view.active{display:block}
+
+/* TYPE */
+.eye{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:8px}
+.stitle{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;margin-bottom:10px}
+.sdesc{font-size:14px;color:var(--mid);max-width:580px;margin-bottom:32px;line-height:1.65}
+
+/* TOGGLE */
+.tog{display:inline-flex;border:1px solid var(--bs);border-radius:var(--rs);overflow:hidden;margin-bottom:22px}
+.tbtn{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--mid);transition:all .15s;font-family:'Inter',sans-serif}
+.tbtn+.tbtn{border-left:1px solid var(--bs)}
+.tbtn.active{background:var(--black);color:var(--white)}
+
+/* CARDS */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:36px;background:var(--border)}
+.ccard{background:var(--white);padding:20px}
+.ccard h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.ccard p{font-size:13px;color:var(--mid);line-height:1.5}
+.spills{display:flex;gap:3px;margin-top:9px;flex-wrap:wrap}
+.sp{padding:2px 7px;border-radius:3px;font-size:10px;font-weight:500;background:var(--light);color:var(--mid);border:1px solid var(--border)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+.tc{border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.tc.feat{border-color:var(--black)}
+.tc h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.tc .mono{font-size:11px;color:var(--mid);margin-bottom:10px;font-family:monospace}
+.tc p{font-size:13px;color:var(--mid);line-height:1.6}
+
+/* LADDER */
+.ladder-wrap{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:36px}
+
+/* Dynamic grid: general = 4 cols (level + cen + biz + scope + chev), ops = 3 cols, csl = 3 cols */
+.lhdr-gen,.ltop-gen{display:grid;grid-template-columns:68px 200px 200px 1fr 14px;gap:10px;padding:10px 18px}
+.lhdr-ops,.ltop-ops{display:grid;grid-template-columns:68px 280px 1fr 14px;gap:10px;padding:10px 18px}
+.lhdr-csl,.ltop-csl{display:grid;grid-template-columns:68px 280px 1fr 14px;gap:10px;padding:10px 18px}
+.lhdr-gen,.lhdr-ops,.lhdr-csl{background:var(--light);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mid)}
+.lrow{border-top:1px solid var(--border);background:var(--white);cursor:pointer;transition:background .1s}
+.lrow:first-child{border-top:none}
+.lrow:hover{background:#fafafa}
+.ltop-gen,.ltop-ops,.ltop-csl{align-items:start;padding:14px 18px}
+.lcode{font-family:'Playfair Display',serif;font-size:15px;color:var(--black);line-height:1.3;padding-top:1px}
+.lcen{font-size:13px;font-weight:500;line-height:1.4}
+.lbiz{font-size:13px;color:var(--mid);line-height:1.4}
+.lscope{font-size:13px;color:var(--mid);line-height:1.4}
+.chv{width:12px;height:12px;border-right:1.5px solid var(--mid);border-bottom:1.5px solid var(--mid);transform:rotate(45deg);transition:transform .2s;margin-top:4px;justify-self:end;flex-shrink:0}
+.lrow.open .chv{transform:rotate(-135deg)}
+.ldet{display:none;padding:0 18px 18px;border-top:1px dashed var(--border)}
+.lrow.open .ldet{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:14px}
+.dl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mid);margin-bottom:4px}
+.dt{font-size:13px;line-height:1.5}
+.dex{font-size:12px;color:var(--mid);font-style:italic;margin-top:8px;padding:8px 10px;background:var(--light);border-radius:var(--rs)}
+.mnote{margin-top:10px;padding:10px 12px;background:var(--amber-light);border-radius:var(--rs);border-left:3px solid #c8a000;font-size:12px;line-height:1.5}
+.mnote strong{display:block;margin-bottom:3px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber)}
+
+/* CALLOUT */
+.callout{border-radius:var(--r);padding:18px 20px;margin-bottom:24px;font-size:13px;line-height:1.6}
+.callout.amber{background:var(--amber-light);border:1px solid #e0c050}
+.callout.amber strong{color:var(--amber);font-size:11px;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.callout.dark{background:var(--black);color:var(--white);padding:26px 28px}
+.callout.dark h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;margin-bottom:8px}
+.callout.dark p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;max-width:580px}
+
+/* CALIBRATION */
+.cal-box{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.cal-hdr{padding:20px 24px;border-bottom:1px solid var(--border)}
+.cal-hdr h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;margin-bottom:4px}
+.cal-hdr p{font-size:13px;color:var(--mid)}
+.cal-body{padding:22px 24px}
+.slrow{margin-bottom:14px}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.sl-name{font-size:13px;font-weight:500}
+.sl-val{font-size:14px;font-weight:600}
+.sl-weight{font-size:10px;color:var(--mid);margin-left:6px;font-weight:400;padding:1px 6px;border-radius:3px}
+.w-high{background:#000;color:#fff}
+.w-low{background:var(--light);color:var(--mid);border:1px solid var(--border)}
+input[type=range]{width:100%;accent-color:var(--black);cursor:pointer}
+.ahint{font-size:11px;color:var(--mid);margin-top:3px;min-height:14px}
+.cal-out{margin-top:20px;padding:20px 22px;background:var(--black);color:var(--white);border-radius:var(--rs)}
+.col-lbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
+.clevel{font-family:'Playfair Display',serif;font-size:28px;font-weight:400}
+.ctitle-row{font-size:13px;margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctitle-main{color:rgba(255,255,255,.8)}
+.ctitle-tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:3px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.6)}
+.ctitle-alt{font-size:12px;color:rgba(255,255,255,.45);margin-top:3px}
+.ctitle-alt-tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.35);margin-left:4px}
+.cdesc{font-size:13px;color:rgba(255,255,255,.75);margin-top:10px;line-height:1.55;border-top:1px solid rgba(255,255,255,.1);padding-top:10px}
+.cnote{font-size:11px;color:var(--mid);margin-top:8px;font-style:italic}
+
+/* MANAGER SPLIT */
+.msplit-box{border:1px solid var(--bs);border-radius:var(--r);padding:22px 24px;margin-bottom:22px;background:#fafafa}
+.msplit-box h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.msplit-box p{font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.55}
+.msplit-row label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px}
+.msplit-row label span{font-weight:400;color:var(--mid)}
+.split-bar{display:flex;height:28px;border-radius:var(--rs);overflow:hidden;margin-top:8px;font-size:11px;font-weight:600}
+.split-mgr{background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;transition:width .3s;min-width:0;overflow:hidden}
+.split-ic{background:var(--light);color:var(--mid);display:flex;align-items:center;justify-content:center;transition:width .3s;border:1px solid var(--border);min-width:0;overflow:hidden}
+.split-legend{display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--mid)}
+.split-legend span{display:flex;align-items:center;gap:5px}
+.split-dot{width:10px;height:10px;border-radius:2px}
+.split-profile{margin-top:10px;font-size:12px;color:var(--mid);line-height:1.5}
+.split-profile strong{color:var(--dark)}
+
+/* SIGNALS */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--border);margin-bottom:24px}
+.scard{background:var(--white);padding:18px}
+.scard h4{font-size:13px;font-weight:600;margin-bottom:6px}
+.scard p{font-size:13px;color:var(--mid);line-height:1.5}
+
+/* GROWTH */
+.gpills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.gpill{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--bs);background:var(--white);color:var(--mid);transition:all .15s;font-family:'Inter',sans-serif}
+.gpill:hover{border-color:var(--black);color:var(--black)}
+.gpill.active{background:var(--black);border-color:var(--black);color:var(--white)}
+.gpanel{display:none;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px}
+.gpanel.active{display:block}
+.gphdr{background:var(--black);color:var(--white);padding:24px 28px}
+.gpfrom{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.gphdr h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:4px}
+.gpnext{font-size:13px;color:rgba(255,255,255,.5)}
+.gpbody{padding:24px 28px}
+.gcrit{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.gcrit:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.gcrit-name{font-size:13px;font-weight:600;margin-bottom:9px}
+.g2col{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:580px){.g2col{grid-template-columns:1fr}}
+.gb{padding:11px 13px;border-radius:var(--rs)}
+.gb.now{background:var(--light);border-left:3px solid var(--mid)}
+.gb.nxt{background:var(--black);border-left:3px solid var(--black)}
+.gbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.gb.now .gbl{color:var(--mid)}
+.gb.nxt .gbl{color:rgba(255,255,255,.4)}
+.gb.now p{font-size:13px;color:var(--dark)}
+.gb.nxt p{font-size:13px;color:rgba(255,255,255,.85)}
+.gex{margin-top:14px;padding:13px;background:var(--light);border-radius:var(--rs)}
+.gex p{font-size:13px;color:var(--mid);font-style:italic}
+.mgr-gate-box{background:#f9f9f9;border:1.5px solid var(--black);border-radius:var(--r);padding:16px 18px;margin-top:14px}
+.mgr-gate-box h4{font-size:13px;font-weight:600;margin-bottom:5px}
+.mgr-gate-box p{font-size:13px;color:var(--mid);line-height:1.5}
+.lv-tags{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.lvtag{padding:4px 11px;border-radius:4px;font-size:12px;font-weight:600;background:var(--black);color:var(--white)}
+.lvtag.no{background:var(--light);color:var(--mid)}
+
+/* WORKFORCE */
+.wp-intro{background:var(--black);color:var(--white);border-radius:var(--r);padding:26px 28px;margin-bottom:28px}
+.wp-intro h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;margin-bottom:8px}
+.wp-intro p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.65;max-width:580px}
+.wp-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.wp-controls select,.wp-controls input[type=number]{padding:8px 12px;border:1px solid var(--bs);border-radius:var(--rs);font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--white)}
+.wp-btn{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--bs);background:var(--white);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.wp-btn:hover{background:var(--black);color:var(--white);border-color:var(--black)}
+.wp-btn.primary{background:var(--black);color:var(--white);border-color:var(--black)}
+.wp-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:28px}
+.wpc{border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.wpc .wpc-label{font-size:11px;color:var(--mid);margin-bottom:5px}
+.wpc .wpc-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:400}
+.wpc .wpc-sub{font-size:11px;color:var(--mid);margin-top:3px}
+.wpc.hl{border-color:var(--black)}
+.wptable-wrap{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.wptable{width:100%;border-collapse:collapse;font-size:13px}
+.wptable th{padding:10px 14px;text-align:left;background:var(--light);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mid);border-bottom:1px solid var(--border);white-space:nowrap}
+.wptable td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.wptable tr:last-child td{border-bottom:none}
+.wptable tr:hover td{background:#fafafa}
+.wptable td input[type=number]{width:60px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;font-family:'Inter',sans-serif;text-align:center;outline:none;transition:border-color .15s}
+.wptable td input[type=number]:focus{border-color:var(--black)}
+.gbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-size:11px;font-weight:600}
+.gbadge.ok{background:var(--green-light);color:var(--green)}
+.gbadge.warn{background:var(--amber-light);color:var(--amber)}
+.gbadge.crit{background:var(--red-light);color:var(--red)}
+.gbadge.over{background:var(--light);color:var(--mid)}
+.ratio-bars{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.rb-row{display:flex;align-items:center;gap:12px}
+.rb-label{font-size:12px;font-weight:500;min-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-track{flex:1;height:18px;background:var(--light);border-radius:3px;overflow:hidden;position:relative;border:1px solid var(--border)}
+.rb-fill{height:100%;background:var(--black);border-radius:3px;transition:width .4s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.rb-fill span{font-size:10px;font-weight:600;color:var(--white)}
+.rb-target{position:absolute;top:0;height:100%;width:2px;background:#c8a000;opacity:.8}
+.rb-stat{font-size:11px;color:var(--mid);min-width:110px;text-align:right}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;margin-top:60px}
+.footer img{height:18px;opacity:.2}
+.footer p{font-size:11px;color:var(--mid)}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <img src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest Global" onerror="this.style.display='none'">
+  <div id="gbox">
+    <h2>Career Leveling Guide</h2>
+    <p>Internal resource for Manifest employees, managers, and recruiters. Enter the access code to continue.</p>
+    <input type="password" id="ginput" placeholder="Access code" onkeydown="if(event.key==='Enter')checkPass()">
+    <button onclick="checkPass()">Continue</button>
+    <p id="gerr">Incorrect code. Please try again.</p>
+  </div>
+</div>
+
+<div id="app">
+  <div class="hdr">
+    <div class="hdr-l">
+      <img class="hdr-logo" src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest" onerror="this.style.display='none'">
+      <div class="hdr-sep"></div>
+      <span class="hdr-title">Career Leveling Guide</span>
+    </div>
+    <span class="hdr-badge">Internal · People &amp; Talent</span>
+  </div>
+
+  <div class="hero">
+    <div class="heye">Manifest Global · People &amp; Talent</div>
+    <h1>Career <em>Leveling</em><br>at Manifest</h1>
+    <p class="hero-sub">How roles, titles, and expectations are structured across Manifest Global. For candidates, employees planning growth, and managers calibrating hires.</p>
+  </div>
+
+  <div class="dbar">
+    <span class="dlbl">Division:</span>
+    <button class="dbtn active" onclick="setDiv('gen',this)">General</button>
+    <button class="dbtn" onclick="setDiv('ops',this)">SP Operations</button>
+    <button class="dbtn" onclick="setDiv('csl',this)">SP Counseling</button>
+  </div>
+
+  <div class="nav">
+    <button class="ntab active" onclick="switchView('overview',this)">Overview &amp; Criteria</button>
+    <button class="ntab" onclick="switchView('ladder',this)">Level Ladder</button>
+    <button class="ntab" onclick="switchView('hiring',this)">Hiring Calibration</button>
+    <button class="ntab" onclick="switchView('growth',this)">Growth Planning</button>
+    <button class="ntab" onclick="switchView('workforce',this)">Workforce Planning</button>
+  </div>
+
+  <div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="view active" id="view-overview">
+    <div class="callout dark">
+      <h3>What is leveling and why does it matter?</h3>
+      <p>Leveling describes the scope, complexity, and impact expected at each career stage at Manifest. It is not about tenure. It is about the kind of problems you solve, how independently you solve them, and how wide your impact reaches. Every role, hire, and promotion maps back to this framework.</p>
+    </div>
+
+    <div class="eye">The 7 criteria</div>
+    <div class="stitle">What we assess</div>
+    <p class="sdesc">Every role is evaluated across these dimensions. For people managers, People Leadership becomes a core scored criterion. Weight shifts based on team size and role mix.</p>
+
+    <div class="cgrid">
+      <div class="ccard"><h4>📐 Scope &amp; Impact</h4><p>How wide is your reach? From tasks inside one pod, to driving company-critical initiatives with P&amp;L impact.</p><div class="spills"><span class="sp">1 · Task-level</span><span class="sp">2 · Process-owner</span><span class="sp">3 · Cross-team</span><span class="sp">4 · Function-wide</span><span class="sp">5 · Company-level</span></div></div>
+      <div class="ccard"><h4>🧩 Complexity</h4><p>How hard are the problems? From following SOPs with low ambiguity, to designing patterns the whole organisation adopts.</p><div class="spills"><span class="sp">1 · SOPs</span><span class="sp">2 · Routine fixes</span><span class="sp">3 · Simplifies flows</span><span class="sp">4 · Durable systems</span><span class="sp">5 · New paradigms</span></div></div>
+      <div class="ccard"><h4>🧭 Autonomy &amp; Ownership</h4><p>How independently do you operate? From needing close guidance, to being a zero-surprise operator others plan around.</p><div class="spills"><span class="sp">1 · Guided</span><span class="sp">2 · Self-directed</span><span class="sp">3 · End-to-end</span><span class="sp">4 · Strategy-setter</span><span class="sp">5 · Standard-setter</span></div></div>
+      <div class="ccard"><h4>⚡ Hard Skills</h4><p>How deep is your functional expertise? From basic tool usage, to inventing techniques and being an industry authority.</p><div class="spills"><span class="sp">1 · Basic tools</span><span class="sp">2 · Executes alone</span><span class="sp">3 · Improves systems</span><span class="sp">4 · Expert teacher</span><span class="sp">5 · Industry-level</span></div></div>
+      <div class="ccard"><h4>🤝 Culture &amp; Behaviors</h4><p>How consistently do you embody our values? From needing reminders, to being a culture carrier under pressure.</p><div class="spills"><span class="sp">1 · Needs reminders</span><span class="sp">2 · Usually follows</span><span class="sp">3 · Role model</span><span class="sp">4 · Raises the bar</span><span class="sp">5 · Culture carrier</span></div></div>
+      <div class="ccard"><h4>👥 People Leadership</h4><p>Not expected at IC levels. For managers, this is the core criterion, scaled by the number of direct reports you manage.</p><div class="spills"><span class="sp">IC · Not required</span><span class="sp">M1 · 2-8 directs</span><span class="sp">M2 · Leads leads</span><span class="sp">M3-4 · VP layer</span></div></div>
+      <div class="ccard"><h4>📅 Years of Experience</h4><p>A supporting signal, not the deciding factor. Used to sense-check, not to promote automatically.</p><div class="spills"><span class="sp">1 · 0-2 yrs</span><span class="sp">2 · 3-5 yrs</span><span class="sp">3 · 6-10 yrs</span><span class="sp">4 · 10-14 yrs</span><span class="sp">5 · 15+ yrs</span></div></div>
+    </div>
+
+    <div class="eye">Two tracks</div>
+    <div class="stitle">IC vs Manager</div>
+    <p class="sdesc">Manifest has two parallel career tracks. Moving into management is not a promotion — it is a different role. Strong ICs can reach IC4 without managing anyone.</p>
+    <div class="two-col">
+      <div class="tc feat">
+        <h3>Individual Contributor (IC)</h3>
+        <p class="mono">IC1.1 > IC1.2 > IC2.1 > IC2.2 > IC3.1 > IC3.2 > IC4.1 > IC4.2</p>
+        <p>Impact grows through depth of expertise and scope of influence. People Leadership is never a prerequisite on this track.</p>
+      </div>
+      <div class="tc">
+        <h3>People Manager (M)</h3>
+        <p class="mono">M1.1 > M1.2 > M2.1 > M2.2 > M3.1 > M3.2 > M4.1 > M4.2 > M5 > M6</p>
+        <p>Impact grows through teams built and outcomes owned. People Leadership is core from M1.1 upward. Entry requires IC2.2 minimum; IC3.1 is preferred.</p>
+      </div>
+    </div>
+
+    <div class="eye">Lean manager context</div>
+    <div class="stitle" style="font-size:20px">Managers with 1-2 direct reports</div>
+    <p class="sdesc">Manifest is a lean organisation. Managers with small teams remain highly hands-on as individual contributors. Assessment should reflect the actual role split, not a theoretical management-heavy model.</p>
+    <div style="background:var(--light);border-radius:var(--r);padding:18px 20px;margin-bottom:32px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+        <div style="padding:14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--border)"><strong style="display:block;font-size:12px;margin-bottom:5px">Nominal Manager (1 DR)</strong><span style="font-size:12px;color:var(--mid)">15% management, 85% IC. People Leadership is a minor factor. Primarily assessed as a senior IC with a formal line management responsibility.</span></div>
+        <div style="padding:14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--border)"><strong style="display:block;font-size:12px;margin-bottom:5px">Lean Manager (2 DRs)</strong><span style="font-size:12px;color:var(--mid)">25% management, 75% IC. Still primarily IC-assessed, but people leadership signals start to matter.</span></div>
+        <div style="padding:14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--border)"><strong style="display:block;font-size:12px;margin-bottom:5px">Hybrid Manager (3-4 DRs)</strong><span style="font-size:12px;color:var(--mid)">45% management, 55% IC. Balanced. Both IC depth and people leadership carry equal weight.</span></div>
+        <div style="padding:14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--border)"><strong style="display:block;font-size:12px;margin-bottom:5px">Manager-Primary (5-7 DRs)</strong><span style="font-size:12px;color:var(--mid)">60% management, 40% IC. People leadership and scope dominate. IC criteria remain but carry less weight.</span></div>
+        <div style="padding:14px;background:var(--white);border-radius:var(--rs);border:1px solid var(--border)"><strong style="display:block;font-size:12px;margin-bottom:5px">Full Manager (8+ DRs)</strong><span style="font-size:12px;color:var(--mid)">75% management, 25% IC. Assessment is dominated by leadership, team outcomes, and organisational scope.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LADDER -->
+  <div class="view" id="view-ladder">
+    <div class="eye">Career architecture</div>
+    <div class="stitle">Level ladder</div>
+    <p class="sdesc">Click any level to expand the full scope, complexity, autonomy, and people leadership expectations with real example behaviours.</p>
+    <div class="tog">
+      <button class="tbtn active" onclick="switchTrack('ic',this)">Individual Contributor</button>
+      <button class="tbtn" onclick="switchTrack('mgr',this)">People Manager</button>
+    </div>
+    <div id="lic-wrap">
+      <div id="lic-hdr" class="lhdr-gen"></div>
+      <div class="ladder-wrap" id="lic-rows"></div>
+    </div>
+    <div id="lmgr-wrap" style="display:none">
+      <div id="lmgr-hdr" class="lhdr-gen"></div>
+      <div class="ladder-wrap" id="lmgr-rows"></div>
+    </div>
+  </div>
+
+  <!-- HIRING -->
+  <div class="view" id="view-hiring">
+    <div class="eye">For hiring managers &amp; recruiters</div>
+    <div class="stitle">Hiring calibration</div>
+    <p class="sdesc">Score a candidate across all criteria and get a suggested level. For manager roles, use the Manager Split tool to reflect the actual ratio of management vs hands-on work.</p>
+
+    <div class="callout amber">
+      <strong>Manager track eligibility</strong>
+      Candidates can only enter a Manager track role (M1.1 and above) if their IC-equivalent capability is at IC2.2 or IC3.1. Candidates below IC2.2 cannot be placed into a manager role regardless of their tenure or seniority title.
+    </div>
+
+    <div class="cal-box">
+      <div class="cal-hdr"><h3>Quick level estimator</h3><p>Select a track, then rate the candidate 1 to 5 on each criterion.</p></div>
+      <div class="cal-body">
+        <div class="tog" style="margin-bottom:18px">
+          <button class="tbtn active" onclick="switchCalcTrack('ic',this)">IC Track</button>
+          <button class="tbtn" onclick="switchCalcTrack('mgr',this)">Manager Track</button>
+        </div>
+
+        <!-- MANAGER SPLIT -->
+        <div id="msplit-section" style="display:none">
+          <div class="msplit-box">
+            <h4>Manager split: how many direct reports?</h4>
+            <p>Based on number of full-time direct reports only (not skip-level). Adjusts how criteria are weighted so managers with small teams are not over-scored on management criteria they are not yet exercising at full scale.</p>
+            <div class="msplit-row">
+              <label>Direct reports: <span id="dr-count">3</span></label>
+              <input type="range" min="1" max="12" value="3" id="dr-slider" oninput="updateDRSplit(this.value)">
+            </div>
+            <div class="split-bar">
+              <div class="split-mgr" id="sm-fill">45% Mgmt</div>
+              <div class="split-ic" id="si-fill">55% IC</div>
+            </div>
+            <div class="split-legend">
+              <span><span class="split-dot" style="background:var(--black)"></span>Management weight</span>
+              <span><span class="split-dot" style="background:var(--light);border:1px solid var(--border)"></span>IC / Hands-on weight</span>
+            </div>
+            <div class="split-profile" id="split-profile"></div>
+          </div>
+        </div>
+
+        <!-- SLIDERS -->
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Scope &amp; Impact <span class="sl-weight" id="w-scope"></span></span><span class="sl-val" id="v-scope">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('scope',this.value)"><div class="ahint" id="a-scope"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Complexity <span class="sl-weight" id="w-complexity"></span></span><span class="sl-val" id="v-complexity">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('complexity',this.value)"><div class="ahint" id="a-complexity"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Autonomy &amp; Ownership <span class="sl-weight" id="w-autonomy"></span></span><span class="sl-val" id="v-autonomy">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('autonomy',this.value)"><div class="ahint" id="a-autonomy"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Hard Skills <span class="sl-weight" id="w-hardskills"></span></span><span class="sl-val" id="v-hardskills">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('hardskills',this.value)"><div class="ahint" id="a-hardskills"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Culture &amp; Behaviors <span class="sl-weight" id="w-culture"></span></span><span class="sl-val" id="v-culture">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('culture',this.value)"><div class="ahint" id="a-culture"></div></div>
+        <div class="slrow" id="pl-row" style="display:none"><div class="sl-top"><span class="sl-name">People Leadership <span class="sl-weight" id="w-pl"></span></span><span class="sl-val" id="v-pl">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('pl',this.value)"><div class="ahint" id="a-pl"></div></div>
+        <div class="slrow"><div class="sl-top"><span class="sl-name">Years of Experience <span class="sl-weight" id="w-yoe"></span></span><span class="sl-val" id="v-yoe">3</span></div><input type="range" min="1" max="5" value="3" oninput="updateCalc('yoe',this.value)"><div class="ahint" id="a-yoe"></div></div>
+
+        <!-- OUTPUT -->
+        <div class="cal-out">
+          <div class="col-lbl">Suggested level</div>
+          <div class="clevel" id="output-level">—</div>
+          <div id="output-title-block" style="margin-top:6px"></div>
+          <div class="cdesc" id="output-desc"></div>
+        </div>
+        <p class="cnote">Starting point only. Validate against the Level Ladder before confirming. For lean managers, the split weighting adjusts the score to reflect actual role balance — a score of 3 across all criteria for a 1-DR manager should land around M1.1, not M5.</p>
+      </div>
+    </div>
+
+    <div class="eye" style="margin-top:32px">Interview signals</div>
+    <div class="stitle" style="font-size:20px">What to probe per criterion</div>
+    <div class="sgrid">
+      <div class="scard"><h4>📐 Scope &amp; Impact</h4><p>Ask about the largest initiative they owned end-to-end. Look for specific metric outcomes: %, time saved, cost reduced. Vague impact claims signal a lower score.</p></div>
+      <div class="scard"><h4>🧩 Complexity</h4><p>Ask where they simplified something messy. Look for reduced handoffs, resolved cross-team blockers, or systems others now reuse.</p></div>
+      <div class="scard"><h4>🧭 Autonomy &amp; Ownership</h4><p>Ask about a time they had no playbook. Look for proactive risk identification, decisions without escalation, zero-surprises operating patterns.</p></div>
+      <div class="scard"><h4>⚡ Hard Skills</h4><p>Give a real functional scenario. Look for depth of diagnosis: can they teach back, review others' work, invent new methods?</p></div>
+      <div class="scard"><h4>🤝 Culture &amp; Behaviors</h4><p>Ask about owning a mistake publicly, or raising a standard others did not meet. Look for consistent patterns, not just one good story.</p></div>
+      <div class="scard"><h4>👥 People Leadership</h4><p>For lean managers: ask about the quality of 1:1s and whether their DRs are growing, not just headcount managed. For full managers: attrition, performance cases, succession depth.</p></div>
+    </div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="view" id="view-growth">
+    <div class="eye">For employees &amp; their managers</div>
+    <div class="stitle">Growth planning</div>
+    <p class="sdesc">Select your current level to see exactly what changes criterion by criterion to reach the level above. IC-to-Manager transitions are shown separately as a distinct path.</p>
+
+    <div class="eye" style="margin-bottom:8px">IC track</div>
+    <div class="gpills" id="gpills-ic"></div>
+
+    <div class="eye" style="margin-top:24px;margin-bottom:6px">IC to Manager transition</div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:12px;line-height:1.55">Moving to the Manager track is a deliberate choice, not a standard level step. It requires meeting specific eligibility criteria and a different role definition.</p>
+    <div class="gpills" id="gpills-ic2mgr"></div>
+
+    <div class="eye" style="margin-top:24px;margin-bottom:8px">Manager track</div>
+    <div class="gpills" id="gpills-mgr"></div>
+
+    <div id="growth-panels" style="margin-top:16px"></div>
+  </div>
+
+  <!-- WORKFORCE PLANNING -->
+  <div class="view" id="view-workforce">
+    <div class="wp-intro">
+      <h3>Workforce planning: leveling health</h3>
+      <p>Track the current distribution of levels across your teams. Enter actual headcount per level band per department. The tool compares against benchmark ratios and shows where gaps, over-leveling, and promotion opportunities exist.</p>
+    </div>
+
+    <div class="eye">Summary</div>
+    <div class="wp-summary" id="wp-summary"></div>
+
+    <div class="eye" style="margin-top:4px">IC / Manager ratio by department</div>
+    <div class="ratio-bars" id="ratio-bars"></div>
+
+    <div class="eye" style="margin-top:8px">Level distribution by department</div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.55">Edit actual headcount in the table below. Gaps show headcount difference from benchmark: negative means more headcount needed at that level, positive means above target.</p>
+    <div class="wp-controls">
+      <select id="wp-dept-filter" onchange="renderWPTable()">
+        <option value="all">All departments</option>
+        <option value="SP Ops">SP Operations</option>
+        <option value="SP Counseling">SP Counseling</option>
+        <option value="K12">K12</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Product">Product</option>
+        <option value="Finance">Finance</option>
+        <option value="Talent">Talent</option>
+      </select>
+      <button class="wp-btn" onclick="resetWPData()">Reset to defaults</button>
+      <button class="wp-btn primary" onclick="renderWPTable();renderWPSummary();renderRatioBars()">Recalculate</button>
+    </div>
+    <div class="wptable-wrap">
+      <table class="wptable">
+        <thead><tr><th>Department</th><th>Level band</th><th>Actual</th><th>Benchmark %</th><th>Target</th><th>Gap</th><th>Status</th></tr></thead>
+        <tbody id="wp-tbody"></tbody>
+      </table>
+    </div>
+    <div class="eye" style="margin-top:8px">Insights</div>
+    <div id="wp-insights" style="margin-bottom:32px"></div>
+  </div>
+
+  </div><!-- /main -->
+
+  <div class="footer">
+    <img src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1692284933/25426/manifest-logo-wordmark-white" alt="Manifest" onerror="this.style.display='none'">
+    <p>Manifest Global · People &amp; Talent · March 2026 · Internal use only</p>
+  </div>
+</div>
+
+<script>
+// ─── GATE ────────────────────────────────────────────────────────────────────
+const PASS='manifest2026';
+function checkPass(){
+  if(document.getElementById('ginput').value===PASS){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    initAll();
+  } else {
+    document.getElementById('gerr').style.display='block';
+    document.getElementById('ginput').value='';
+    document.getElementById('ginput').focus();
+  }
+}
+function initAll(){
+  setDiv('gen',document.querySelector('.dbtn.active'));
+  initAnchors();updateDRSplit(3);updateCalcOutput();
+  renderWPTable();renderWPSummary();renderRatioBars();
+}
+
+// ─── DIVISION ────────────────────────────────────────────────────────────────
+let curDiv='gen';
+
+// Title maps
+const titles={
+  'IC1.1':{cen:'Junior Associate / Associate',biz:'Junior Associate / Associate'},
+  'IC1.2':{cen:'Specialist / Senior Associate',biz:'Senior Associate'},
+  'IC2.1':{cen:'Senior Specialist',biz:'Partner / Manager'},
+  'IC2.2':{cen:'Principal Specialist / Associate Lead',biz:'Senior Partner / Senior Manager'},
+  'IC3.1':{cen:'Lead',biz:'Associate Director'},
+  'IC3.2':{cen:'Senior Lead',biz:'Director'},
+  'IC4.1':{cen:'Principal Lead',biz:'Senior Director'},
+  'IC4.2':{cen:'Senior Principal Lead',biz:'Executive / Principal Director'},
+  'M1.1':{cen:'Team Lead / Senior Team Lead / Manager',biz:'Associate Director'},
+  'M1.2':{cen:'Senior Manager / Associate Head',biz:'Director'},
+  'M2.1':{cen:'Principal Manager / Senior Associate Head',biz:'Senior Director'},
+  'M2.2':{cen:'Senior Principal Manager / Head',biz:'Executive Director'},
+  'M3.1':{cen:'Senior Head',biz:'Senior Executive Director'},
+  'M3.2':{cen:'Associate VP / General Manager',biz:'General Manager'},
+  'M4.1':{cen:'VP',biz:'Managing Director'},
+  'M4.2':{cen:'Senior VP',biz:'Senior Managing Director'},
+  'M5':{cen:'C-Level',biz:'C-Level'},
+  'M6':{cen:'Senior/Group C-Level',biz:'Senior C-Level'}
+};
+
+function setDiv(d,btn){
+  curDiv=d;
+  document.querySelectorAll('.dbtn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  refreshLadder('lic-rows','lic-hdr',icLevels);
+  refreshLadder('lmgr-rows','lmgr-hdr',mgrLevels);
+  updateCalcOutput();
+}
+
+// Returns grid class and headers based on division
+function getLayoutClass(){
+  if(curDiv==='ops')return{cls:'ops',cols:['Level','Central title (Central)','Scope snapshot','']};
+  if(curDiv==='csl')return{cls:'csl',cols:['Level','Business title (Business)','Scope snapshot','']};
+  return{cls:'gen',cols:['Level','Central title (Central)','Business title (Business)','Scope snapshot','']};
+}
+
+function refreshLadder(rowsId,hdrId,levels){
+  const l=getLayoutClass();
+  // rebuild header
+  const hdr=document.getElementById(hdrId);
+  hdr.className='lhdr-'+l.cls;
+  hdr.innerHTML=l.cols.map(c=>`<span>${c}</span>`).join('');
+  // rebuild rows
+  const c=document.getElementById(rowsId);
+  c.innerHTML='';
+  levels.forEach(lvl=>{
+    const t=titles[lvl.code]||{cen:'',biz:''};
+    const r=document.createElement('div');r.className='lrow';
+    let topHtml;
+    if(curDiv==='ops'){
+      topHtml=`<div class="ltop-ops" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lcode">${lvl.code}</span>
+        <span class="lcen">${t.cen}</span>
+        <span class="lscope">${lvl.scope}</span>
+        <span class="chv"></span>
+      </div>`;
+    } else if(curDiv==='csl'){
+      topHtml=`<div class="ltop-csl" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lcode">${lvl.code}</span>
+        <span class="lbiz">${t.biz}</span>
+        <span class="lscope">${lvl.scope}</span>
+        <span class="chv"></span>
+      </div>`;
+    } else {
+      topHtml=`<div class="ltop-gen" onclick="this.parentElement.classList.toggle('open')">
+        <span class="lcode">${lvl.code}</span>
+        <span class="lcen">${t.cen}</span>
+        <span class="lbiz">${t.biz}</span>
+        <span class="lscope">${lvl.scope}</span>
+        <span class="chv"></span>
+      </div>`;
+    }
+    r.innerHTML=topHtml+`
+    <div class="ldet">
+      <div><div class="dl">Complexity</div><div class="dt">${lvl.complexity}</div><div class="dl" style="margin-top:11px">Autonomy &amp; Ownership</div><div class="dt">${lvl.autonomy}</div></div>
+      <div><div class="dl">Hard Skills</div><div class="dt">${lvl.hard}</div><div class="dl" style="margin-top:11px">People Leadership</div><div class="dt">${lvl.pl}</div></div>
+      <div><div class="dl">Culture</div><div class="dt">${lvl.culture}</div><div class="dl" style="margin-top:11px">Typical YoE</div><div class="dt">${lvl.yoe}</div><div class="dex">${lvl.ex}</div>${lvl.mgrNote?`<div class="mnote"><strong>Manager transition note</strong>${lvl.mgrNote}</div>`:''}</div>
+    </div>`;
+    c.appendChild(r);
+  });
+}
+
+function switchView(v,btn){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  btn.classList.add('active');
+}
+function switchTrack(t,btn){
+  document.querySelectorAll('#view-ladder .tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lic-wrap').style.display=t==='ic'?'block':'none';
+  document.getElementById('lmgr-wrap').style.display=t==='mgr'?'block':'none';
+}
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const icA={
+  scope:['Works inside one team, completes assigned tasks','Owns a small process end to end, improves one metric','Leads a cross-team task, moves a function metric','Runs a cross-org program, creates a reusable playbook','Sets company direction for operations, step-change impact'],
+  complexity:['Follows clear steps, low ambiguity','Solves routine problems, suggests small fixes','Simplifies messy flows and reduces handoffs','Designs durable processes across teams','Creates new patterns others adopt'],
+  autonomy:['Needs close help, completes assigned tasks','Self-directed on familiar work, flags risks early','Delivers end to end, manages risk proactively','Sets goals tied to strategy and shapes intake','Sets standards; zero-surprise operator'],
+  hardskills:['Basic tools and process','Executes standard work alone','Improves systems, reviews others work','Expert across areas, teaches others','Industry-level expert, invents techniques'],
+  culture:['Meets some values, needs reminders','Usually follows values, rare misses','Consistent role model, helps nearby teams','Raises the bar kindly and directly','Culture carrier under pressure'],
+  pl:['No leadership expected','Shares knowledge ad hoc','Mentors 1-2 and improves team quality','Leads by influence, upskills peers','Grows future leaders, builds practices'],
+  yoe:['0-2 years','3-5 years','6-10 years','10-14 years','15+ years']
+};
+const mgrA={
+  scope:['Leads a small pod on a simple goal, supports team OKRs','Manages a team of 5-8 with a clear charter, contributes to OKRs','Leads multiple squads or managers, accountable for function OKRs','Owns a region or large function, owns budget and portfolio OKRs','Sets org strategy across regions, multi-year plan and P&L'],
+  complexity:['Plans schedule, escalates issues early','Balances scope and capacity, clears common blockers','Aligns functions and handles constraints','Designs operating model that reduces complexity','Designs org strategy for complex environments'],
+  autonomy:['Needs guidance on planning and people topics','Runs planning with oversight, maintains budget/headcount hygiene','Owns team roadmap and delivery, handles performance management','Owns resourcing, budget and cross-team dependencies','Operates like an owner for a BU/region, has successors ready'],
+  hardskills:['Basic team process and metrics','Runs planning, basic analytics, fair hiring','Sets team standards, reviews PRDs/financials','Sets functional standards, resolves tradeoffs','Cross-functional master, repeatedly hires top 10%'],
+  culture:['Meets some values, needs reminders','Usually follows values, rare misses','Consistent role model, helps nearby teams','Raises the bar kindly and directly','Culture carrier under pressure'],
+  pl:['Leads 1-3 with support','Manages 4-8, runs 1:1s, hiring','Leads managers or multiple squads','Builds bench, fixes org design','Scales function across regions, pipeline in place'],
+  yoe:['0-2 years','3-5 years','6-10 years','10-14 years','15+ years']
+};
+
+const icLevels=[
+  {code:'IC1.1',scope:'Delivers tasks within one pod. No external dependencies.',complexity:'Follows SOPs and recipes with low ambiguity.',autonomy:'Needs close guidance. Escalates early.',hard:'Basic tools and process.',culture:'Meets some values, needs occasional reminders.',pl:'Not expected.',yoe:'0-2 years',ex:'Resolved 10 support tickets and closed 2 simple tasks with minimal direction.'},
+  {code:'IC1.2',scope:'Owns a contained feature or process. Minor impact (approx 3% metric).',complexity:'Solves routine issues using known patterns. Proposes small improvements.',autonomy:'Self-directed on familiar work. Flags risks early.',hard:'Executes standard work independently.',culture:'Usually follows values with rare misses.',pl:'Not expected.',yoe:'3-5 years',ex:'Took ownership of the returns process and cut average handling time by 5%.'},
+  {code:'IC2.1',scope:'Leads a feature or process end-to-end. Improves a team KPI by at least 5%.',complexity:'Simplifies messy flows and reduces handoffs.',autonomy:'Delivers end-to-end. Proactively manages risk. Resolves cross-team blockers.',hard:'Improves systems, reviews others work.',culture:'Consistent role model who helps nearby teams.',pl:'May coach a junior. Not accountable for people outcomes.',yoe:'3-5 years',ex:'Cut handoffs from 4 to 2 steps. Error rate dropped 30%.'},
+  {code:'IC2.2',scope:'Drives a cross-team workflow or multiple features. Moves a function OKR by approx 10%.',complexity:'Tackles ambiguous, multi-system problems. Sets evaluation criteria.',autonomy:'Operates with minimal oversight. Coordinates stakeholders across functions.',hard:'Expert in area. Teaches others.',culture:'Raises the bar kindly and directly.',pl:'Informal mentoring. Assists with hiring signals.',yoe:'6-10 years',ex:'Created a standard playbook for escalations. Time to resolve dropped 25%.',mgrNote:'IC2.2 is the minimum eligibility for transition to M1.1. Must show strong mentoring signals and readiness for formal performance accountability.'},
+  {code:'IC3.1',scope:'Leads initiatives across at least 2 teams. Creates a reusable playbook. Sustained impact.',complexity:'Sets goals aligned to strategy. Shapes upstream demand. Designs resilient systems.',autonomy:'Zero-surprise operator. Others plan around them.',hard:'Expert across multiple areas. Teaches and upskills peers.',culture:'Culture carrier. Raises bar broadly.',pl:'Leads communities of practice. No formal DRs required.',yoe:'6-10 years',ex:'Redesigned fulfillment model. Cost per ticket down 35% YoY.',mgrNote:'IC3.1 is the preferred entry point for M1.1. Leadership by influence and playbook-level thinking are already demonstrated.'},
+  {code:'IC3.2',scope:'Company-critical initiative adopted across functions. Material impact to P&L/cost/time.',complexity:'Tames unknown unknowns. Defines org-wide paradigms.',autonomy:'Owner mindset, accountable without supervision.',hard:'Sets domain strategy. Bar-raiser across hiring and standards.',culture:'Culture carrier under pressure. Cross-org influence.',pl:'Advises senior managers. Coaches broadly across function.',yoe:'10-14 years',ex:'Set global ops strategy, created 3-year plan across regions.'},
+  {code:'IC4.1',scope:'Domain authority. Sets domain strategy. Step-change outcomes over multiple quarters.',complexity:'Architect of patterns used company-wide. Durable clarity.',autonomy:'Sets standards. Stewards multi-year roadmap outcomes.',hard:'Industry-level expertise. Invents techniques.',culture:'Culture setter and defender at scale.',pl:'Influences org design. Raises hiring bar across company.',yoe:'15+ years',ex:'Co-authored internal automation library adopted by 4 teams.'},
+  {code:'IC4.2',scope:'Enterprise-level impact across regions/BUs. Strategy others follow.',complexity:'Solves hardest ambiguous problems. Sets principles.',autonomy:'Board/ELT accountability for outcomes.',hard:'Industry-level thought leadership. Paradigm shifts.',culture:'Culture carrier and setter at enterprise scale.',pl:'Mentors VPs/Directors. Shapes culture at scale.',yoe:'15+ years',ex:'Set enterprise patterns. Multi-region strategy with repeated wins.'}
+];
+const mgrLevels=[
+  {code:'M1.1',scope:'Accountable for team OKRs, achieves at least 80%. Healthy team hygiene.',complexity:'Balances scope/resources. Resolves blockers without escalation.',autonomy:'Runs planning/retros. Owns 1:1s/feedback. Hires with guidance.',hard:'Runs planning, basic analytics, fair hiring.',culture:'Consistent role model.',pl:'Manages 2-5 directs. Builds performance rhythm. Attrition in band.',yoe:'6-10 years',ex:'Managed a team of 6, achieved 85% of team OKRs.'},
+  {code:'M1.2',scope:'Improves 1-2 core team KPIs. Removes systemic blockers.',complexity:'Orchestrates across functions. Sets team evaluation criteria.',autonomy:'Owns team roadmap and delivery. Performance management end-to-end.',hard:'Sets team standards. Reviews PRDs/financials.',culture:'Raises the bar kindly and directly.',pl:'Manages 6-12 directs. Runs hiring loop. Handles probations.',yoe:'10-14 years',ex:'Leads 2 leads across shifts. Function SLA improved 10%.'},
+  {code:'M2.1',scope:'Function-level OKRs, at least 85% attainment. Repeatable capability.',complexity:'Designs operating model. Reduces handoffs/complexity.',autonomy:'Owns budget/headcount for area. Medium P&L responsibility.',hard:'Sets functional standards. Resolves complex tradeoffs.',culture:'Culture carrier under pressure.',pl:'Leads leads. Succession plan for team leads. Builds bench (at least 2 ready successors).',yoe:'10-14 years',ex:'Owns India Ops, budget, and vendor performance. CSAT +12pts.'},
+  {code:'M2.2',scope:'Portfolio outcomes across programs. Improves 2+ core KPIs.',complexity:'Sets functional standards. Evaluates complex tradeoffs.',autonomy:'Owner for budget and dependencies. Cross-team risk management.',hard:'Sets functional standards across the area.',culture:'Cross-org culture setter.',pl:'Leads managers of managers. Diversity and hiring targets on track.',yoe:'15+ years',ex:'Moved org to hub-and-spoke model. Escalations down 45%.'},
+  {code:'M3.1',scope:'At least 90% OKR attainment. Material movement in quality/cost/speed.',complexity:'Architects org design. Scalable playbooks adopted widely.',autonomy:'Owns full budget. Shapes upstream demand.',hard:'Sets enterprise standards.',culture:'Enterprise-level culture carrier.',pl:'Leads VPs/Directors. Shapes culture and bar across org.',yoe:'15+ years',ex:'Set global ops strategy, created 3-year plan across regions.'},
+  {code:'M3.2',scope:'Multi-quarter strategy. Hits revenue/efficiency goals.',complexity:'Solves abstract cross-domain issues consistently.',autonomy:'Board/ELT visibility. Owns risks and compliance.',hard:'Cross-functional mastery.',culture:'Enterprise culture carrier and setter.',pl:'Leads executives. Builds next-gen leadership bench.',yoe:'15+ years',ex:'Multi-quarter strategy execution. Material P&L movement.'},
+  {code:'M4.1',scope:'Exec owner for a region/function. Company-level step changes.',complexity:'Sets enterprise patterns. Steers multi-year bets.',autonomy:'Full P&L stewardship. Capital allocation decisions.',hard:'Enterprise-scale authority.',culture:'Culture-setter at enterprise scale.',pl:'Succession pipeline across VP layer. Coaches execs.',yoe:'15+ years',ex:'Exec owner for region or function with broad organisational span.'},
+  {code:'M4.2',scope:'Enterprise-scale exec. Multiple regions/functions. Repeated enterprise wins.',complexity:'Defines operating model company-wide. Crisis leadership.',autonomy:'Owns multi-year plan. Investor/board metrics.',hard:'Industry-level leadership.',culture:'Enterprise culture architect.',pl:'Leads executives at scale. Develops CEOs.',yoe:'15+ years',ex:'Sustained multi-region strategy execution across consecutive years.'},
+  {code:'M5',scope:'Sets strategy, portfolio and capital allocation across company.',complexity:'Solves hardest ambiguous problems. Sets principles.',autonomy:'CEO/ELT accountability for outcomes.',hard:'Industry-level thought leadership.',culture:'Company culture founder and carrier.',pl:'Stewards culture at group scale.',yoe:'15+ years',ex:'Company executive with enterprise scope.'},
+  {code:'M6',scope:'Multi-company strategy. M&A. New market creation.',complexity:'Industry-level paradigm shifts.',autonomy:'Board accountability across companies.',hard:'Industry paradigm setter.',culture:'Cross-company culture setter.',pl:'Board accountability. Develops company-level leaders.',yoe:'15+ years',ex:'Group/holding leadership with cross-company mandate.'}
+];
+
+// Build ladders immediately (refreshed on div switch)
+refreshLadder('lic-rows','lic-hdr',icLevels);
+refreshLadder('lmgr-rows','lmgr-hdr',mgrLevels);
+
+// ─── MANAGER SPLIT ────────────────────────────────────────────────────────────
+let drCount=3;
+
+// Returns weights and metadata based on number of direct reports.
+// Weights are MULTIPLIERS applied to scores before averaging.
+// Keeping all weights at ~1.0 means unweighted. 
+// For lean managers, IC criteria get weight > 1, pl gets weight < 1.
+function getDRProfile(dr){
+  dr=parseInt(dr);
+  if(dr===1) return{
+    mgmt:15,ic:85,label:'Nominal Manager (1 DR)',
+    desc:'Primarily assessed as a senior IC with a formal line management title. People Leadership is a minor factor. IC criteria dominate.',
+    w:{scope:1.0,complexity:1.2,autonomy:1.2,hardskills:1.2,culture:1.0,pl:0.3,yoe:1.0}
+  };
+  if(dr===2) return{
+    mgmt:25,ic:75,label:'Lean Manager (2 DRs)',
+    desc:'Still primarily IC-assessed. Hard Skills, Complexity, and Autonomy carry more weight than People Leadership.',
+    w:{scope:1.0,complexity:1.1,autonomy:1.1,hardskills:1.1,culture:1.0,pl:0.5,yoe:1.0}
+  };
+  if(dr<=4) return{
+    mgmt:45,ic:55,label:'Hybrid Manager (3-4 DRs)',
+    desc:'Balanced. IC depth and people leadership carry equal weight.',
+    w:{scope:1.0,complexity:0.9,autonomy:0.9,hardskills:0.9,culture:1.0,pl:1.1,yoe:1.0}
+  };
+  if(dr<=7) return{
+    mgmt:60,ic:40,label:'Manager-Primary (5-7 DRs)',
+    desc:'People Leadership and Scope dominate. IC criteria remain but carry reduced weight.',
+    w:{scope:1.0,complexity:0.7,autonomy:0.9,hardskills:0.7,culture:1.0,pl:1.4,yoe:1.0}
+  };
+  return{
+    mgmt:75,ic:25,label:'Full Manager (8+ DRs)',
+    desc:'Assessment dominated by leadership, team outcomes, and organisational scope. IC criteria carry low weight.',
+    w:{scope:1.0,complexity:0.5,autonomy:0.8,hardskills:0.5,culture:1.0,pl:1.6,yoe:1.0}
+  };
+}
+
+function updateDRSplit(val){
+  drCount=parseInt(val);
+  document.getElementById('dr-count').textContent=val;
+  const p=getDRProfile(val);
+  document.getElementById('sm-fill').style.width=p.mgmt+'%';
+  document.getElementById('si-fill').style.width=p.ic+'%';
+  document.getElementById('sm-fill').textContent=p.mgmt>8?p.mgmt+'% Mgmt':'';
+  document.getElementById('si-fill').textContent=p.ic>8?p.ic+'% IC':'';
+  document.getElementById('split-profile').innerHTML=`<strong>${p.label}:</strong> ${p.desc}`;
+  updateWeightLabels();
+  updateCalcOutput();
+}
+
+function updateWeightLabels(){
+  if(calcTrack!=='mgr'){
+    ['scope','complexity','autonomy','hardskills','culture','pl','yoe'].forEach(k=>{
+      const el=document.getElementById('w-'+k);if(el){el.textContent='';el.className='sl-weight';}
+    });
+    return;
+  }
+  const p=getDRProfile(drCount);
+  Object.entries(p.w).forEach(([k,w])=>{
+    const el=document.getElementById('w-'+k);
+    if(!el)return;
+    if(w>=1.3){el.textContent='high weight';el.className='sl-weight w-high';}
+    else if(w>=1.05){el.textContent='weighted up';el.className='sl-weight w-high';}
+    else if(w<=0.6){el.textContent='low weight';el.className='sl-weight w-low';}
+    else if(w<=0.85){el.textContent='weighted down';el.className='sl-weight w-low';}
+    else{el.textContent='';el.className='sl-weight';}
+  });
+}
+
+// ─── CALIBRATION ─────────────────────────────────────────────────────────────
+let calcTrack='ic';
+const sc={scope:3,complexity:3,autonomy:3,hardskills:3,culture:3,pl:3,yoe:3};
+
+// IC map: straightforward average of 6 criteria, bands scaled 1-5
+const icMap=[
+  {min:1,   max:1.49,code:'IC1.1',desc:'Entry-level. Executes well-defined tasks with close guidance.'},
+  {min:1.5, max:1.99,code:'IC1.2',desc:'Emerging performer. Owns a contained process. Minor metric impact.'},
+  {min:2,   max:2.49,code:'IC2.1',desc:'Solid IC. Leads a process end-to-end. Improves team KPI at least 5%.'},
+  {min:2.5, max:2.99,code:'IC2.2',desc:'Senior IC. Drives cross-team workflows. Minimum IC entry for Manager track.'},
+  {min:3,   max:3.49,code:'IC3.1',desc:'Staff-level IC. Leads multi-team initiatives. Creates reusable playbooks.'},
+  {min:3.5, max:3.99,code:'IC3.2',desc:'Principal-level IC. Shapes function direction. Material P&L impact.'},
+  {min:4,   max:4.49,code:'IC4.1',desc:'Domain authority. Sets domain strategy. Step-change outcomes.'},
+  {min:4.5, max:5,   code:'IC4.2',desc:'Enterprise-level impact across regions and BUs. Strategy others follow.'}
+];
+
+// Manager map: scores are weighted via getDRProfile, then mapped to levels.
+// KEY FIX: bands are tighter and use a NORMALISED score (1-5 range preserved).
+// At 1 DR: pl weight is 0.3 — a score of 3 across all criteria gives approx
+// weighted avg of ~2.8-2.9, landing at M1.1 or M1.2, not M5.
+const mgrMap=[
+  {min:1,   max:1.49,code:'M1.1',desc:'New people manager. Team of 2-5. Achieves at least 80% team OKRs.'},
+  {min:1.5, max:1.99,code:'M1.2',desc:'Experienced manager. Improves 1-2 core team KPIs. Removes systemic blockers.'},
+  {min:2,   max:2.49,code:'M2.1',desc:'Manager of managers. Function-level OKRs, at least 85% attainment.'},
+  {min:2.5, max:2.99,code:'M2.2',desc:'Large multi-team leader. Portfolio outcomes. Improves 2+ core KPIs.'},
+  {min:3,   max:3.49,code:'M3.1',desc:'Function/region head. At least 90% OKR attainment.'},
+  {min:3.5, max:3.99,code:'M3.2',desc:'Business owner for a major unit or country P&L.'},
+  {min:4,   max:4.49,code:'M4.1',desc:'Exec owner for a region/function. Company-level step changes.'},
+  {min:4.5, max:4.89,code:'M4.2',desc:'Enterprise-scale exec. Multiple regions/functions.'},
+  {min:4.9, max:5,   code:'M5',  desc:'Company executive with enterprise scope. Sets strategy, portfolio and capital allocation.'}
+];
+
+function switchCalcTrack(t,btn){
+  calcTrack=t;
+  document.querySelectorAll('#view-hiring .tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pl-row').style.display=t==='mgr'?'block':'none';
+  document.getElementById('msplit-section').style.display=t==='mgr'?'block':'none';
+  initAnchors();updateWeightLabels();updateCalcOutput();
+}
+function updateCalc(crit,val){
+  sc[crit]=parseInt(val);
+  document.getElementById('v-'+crit).textContent=val;
+  const A=calcTrack==='ic'?icA:mgrA;
+  const el=document.getElementById('a-'+crit);
+  if(el)el.textContent=A[crit][parseInt(val)-1]||'';
+  updateCalcOutput();
+}
+function initAnchors(){
+  const A=calcTrack==='ic'?icA:mgrA;
+  ['scope','complexity','autonomy','hardskills','culture','pl','yoe'].forEach(k=>{
+    const el=document.getElementById('a-'+k);
+    if(el)el.textContent=A[k][sc[k]-1]||'';
+  });
+}
+
+function calcWeightedAvg(){
+  if(calcTrack==='ic'){
+    const keys=['scope','complexity','autonomy','hardskills','culture','yoe'];
+    return keys.reduce((s,k)=>s+sc[k],0)/keys.length;
+  }
+  // Manager: apply DR-profile weights, then re-normalise to 1-5 scale
+  const keys=['scope','complexity','autonomy','hardskills','culture','pl','yoe'];
+  const p=getDRProfile(drCount);
+  // Compute weighted sum and weighted max possible, then scale back to 1-5
+  let wsum=0,wval=0;
+  keys.forEach(k=>{
+    const w=p.w[k]||1;
+    wval+=sc[k]*w;
+    wsum+=w;
+  });
+  // wval/wsum gives weighted avg on 1-5 scale — this is the correct output
+  return wval/wsum;
+}
+
+function updateCalcOutput(){
+  const avg=calcWeightedAvg();
+  const map=calcTrack==='ic'?icMap:mgrMap;
+  const m=map.find(l=>avg>=l.min&&avg<=l.max)||map[map.length-1];
+  document.getElementById('output-level').textContent=m.code;
+
+  // Title block with (Central) and (Business) tags
+  const t=titles[m.code]||{cen:'',biz:''};
+  const block=document.getElementById('output-title-block');
+  if(curDiv==='ops'){
+    block.innerHTML=`<div class="ctitle-row"><span class="ctitle-main">${t.cen}</span><span class="ctitle-tag">Central</span></div>`;
+  } else if(curDiv==='csl'){
+    block.innerHTML=`<div class="ctitle-row"><span class="ctitle-main">${t.biz}</span><span class="ctitle-tag">Business</span></div>`;
+  } else {
+    // General: show both
+    block.innerHTML=`
+      <div class="ctitle-row"><span class="ctitle-main">${t.cen}</span><span class="ctitle-tag">Central</span></div>
+      ${t.biz!==t.cen?`<div class="ctitle-alt">${t.biz} <span class="ctitle-alt-tag">Business</span></div>`:''}`;
+  }
+
+  let extra='';
+  if(calcTrack==='mgr'){
+    const p=getDRProfile(drCount);
+    extra=` Profile: ${p.label}. Weighted avg: ${avg.toFixed(2)}.`;
+  } else {
+    extra=` Average: ${avg.toFixed(2)}.`;
+  }
+  document.getElementById('output-desc').textContent=m.desc+extra;
+}
+
+// ─── GROWTH PLANNING ──────────────────────────────────────────────────────────
+const panelsEl=document.getElementById('growth-panels');
+const critDefs=[{k:'scope',l:'Scope &amp; Impact'},{k:'complexity',l:'Complexity'},{k:'autonomy',l:'Autonomy &amp; Ownership'},{k:'hard',l:'Hard Skills'},{k:'culture',l:'Culture &amp; Behaviors'},{k:'pl',l:'People Leadership'},{k:'yoe',l:'Years of Experience'}];
+
+const icTransitions=icLevels.slice(0,-1).map((l,i)=>({cur:l,nxt:icLevels[i+1],type:'ic'}));
+const ic2mgrTransitions=[
+  {cur:icLevels.find(l=>l.code==='IC2.2'),nxt:mgrLevels[0],type:'ic2mgr',fromCode:'IC2.2'},
+  {cur:icLevels.find(l=>l.code==='IC3.1'),nxt:mgrLevels[0],type:'ic2mgr',fromCode:'IC3.1'}
+];
+const mgrTransitions=mgrLevels.slice(0,-1).map((l,i)=>({cur:l,nxt:mgrLevels[i+1],type:'mgr'}));
+
+let panelIdx=0;
+
+function buildGrowthSection(transitions,pillContainer){
+  transitions.forEach(t=>{
+    const pill=document.createElement('button');
+    pill.className='gpill';
+    const lbl=t.type==='ic2mgr'?`IC (${t.fromCode}) to M1.1`:`${t.cur.code} to ${t.nxt.code}`;
+    pill.textContent=lbl;
+    const idx=panelIdx;
+    pill.onclick=()=>{
+      document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.gpanel').forEach(p=>p.classList.remove('active'));
+      pill.classList.add('active');
+      document.getElementById('gp-'+idx).classList.add('active');
+    };
+    pillContainer.appendChild(pill);
+
+    const crits=critDefs.map(({k,l})=>{
+      const now=t.cur[k],nxt=t.nxt[k];
+      if(!now||!nxt||now===nxt)return'';
+      return`<div class="gcrit"><div class="gcrit-name">${l}</div><div class="g2col"><div class="gb now"><div class="gbl">At ${t.cur.code}</div><p>${now}</p></div><div class="gb nxt"><div class="gbl" style="color:rgba(255,255,255,.4)">At ${t.nxt.code}</div><p>${nxt}</p></div></div></div>`;
+    }).filter(Boolean).join('');
+
+    const titleNow=titles[t.cur.code]?titles[t.cur.code].cen:'';
+    const titleNxt=titles[t.nxt.code]?titles[t.nxt.code].cen:'';
+
+    let extra='';
+    if(t.type==='ic2mgr'){
+      extra=`<div class="mgr-gate-box">
+        <h4>This is an IC to Manager transition — not a standard level step</h4>
+        <p>Moving to the Manager track requires a deliberate decision and meeting specific eligibility criteria. You are moving into a fundamentally different role where success is measured through your team's outcomes, not your individual output.</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--mid)">Requirements: IC2.2 capability minimum across all core criteria, readiness for formal performance accountability, a team to lead, and endorsement from your manager and Talent/People team.</p>
+        <div class="lv-tags"><span class="lvtag">IC2.2 minimum</span><span class="lvtag">IC3.1 preferred</span><span class="lvtag no">IC2.1 or below: not eligible</span></div>
+      </div>`;
+    } else if(t.nxt&&t.nxt.mgrNote){
+      extra=`<div class="mnote" style="margin-top:14px"><strong>Manager transition note</strong>${t.nxt.mgrNote}</div>`;
+    }
+
+    const panel=document.createElement('div');
+    panel.className='gpanel';
+    panel.id='gp-'+idx;
+    panel.innerHTML=`<div class="gphdr"><div class="gpfrom">${t.type==='ic2mgr'?'IC to Manager transition':'Level transition'}</div><h3>${t.cur.code}: ${titleNow}</h3><div class="gpnext">Next: ${t.nxt.code} · ${titleNxt}</div></div>
+    <div class="gpbody"><p style="font-size:13px;color:var(--mid);margin-bottom:18px;line-height:1.55">Criteria that stay the same are not shown.</p>${crits}${extra}<div class="gex" style="margin-top:14px"><div class="dl">Example behaviour at ${t.nxt.code}</div><p>${t.nxt.ex||''}</p></div></div>`;
+    panelsEl.appendChild(panel);
+    panelIdx++;
+  });
+}
+
+buildGrowthSection(icTransitions,document.getElementById('gpills-ic'));
+buildGrowthSection(ic2mgrTransitions,document.getElementById('gpills-ic2mgr'));
+buildGrowthSection(mgrTransitions,document.getElementById('gpills-mgr'));
+
+// Activate first IC pill
+const firstIcPill=document.querySelector('#gpills-ic .gpill');
+if(firstIcPill){firstIcPill.classList.add('active');document.getElementById('gp-0').classList.add('active');}
+
+// ─── WORKFORCE PLANNING ───────────────────────────────────────────────────────
+const wpBenchmarks={
+  'IC Entry (IC1.x)':{bench:25},'IC Mid (IC2.x)':{bench:35},'IC Senior (IC3.x+)':{bench:20},
+  'Manager M1.x':{bench:12},'Manager M2.x+':{bench:8}
+};
+const defaultWP=[
+  {dept:'SP Ops',band:'IC Entry (IC1.x)',actual:8},{dept:'SP Ops',band:'IC Mid (IC2.x)',actual:5},{dept:'SP Ops',band:'IC Senior (IC3.x+)',actual:2},{dept:'SP Ops',band:'Manager M1.x',actual:1},{dept:'SP Ops',band:'Manager M2.x+',actual:1},
+  {dept:'SP Counseling',band:'IC Entry (IC1.x)',actual:6},{dept:'SP Counseling',band:'IC Mid (IC2.x)',actual:8},{dept:'SP Counseling',band:'IC Senior (IC3.x+)',actual:1},{dept:'SP Counseling',band:'Manager M1.x',actual:1},{dept:'SP Counseling',band:'Manager M2.x+',actual:0},
+  {dept:'K12',band:'IC Entry (IC1.x)',actual:5},{dept:'K12',band:'IC Mid (IC2.x)',actual:4},{dept:'K12',band:'IC Senior (IC3.x+)',actual:2},{dept:'K12',band:'Manager M1.x',actual:2},{dept:'K12',band:'Manager M2.x+',actual:1},
+  {dept:'Engineering',band:'IC Entry (IC1.x)',actual:8},{dept:'Engineering',band:'IC Mid (IC2.x)',actual:12},{dept:'Engineering',band:'IC Senior (IC3.x+)',actual:5},{dept:'Engineering',band:'Manager M1.x',actual:3},{dept:'Engineering',band:'Manager M2.x+',actual:2},
+  {dept:'Product',band:'IC Entry (IC1.x)',actual:2},{dept:'Product',band:'IC Mid (IC2.x)',actual:5},{dept:'Product',band:'IC Senior (IC3.x+)',actual:3},{dept:'Product',band:'Manager M1.x',actual:2},{dept:'Product',band:'Manager M2.x+',actual:1},
+  {dept:'Finance',band:'IC Entry (IC1.x)',actual:2},{dept:'Finance',band:'IC Mid (IC2.x)',actual:3},{dept:'Finance',band:'IC Senior (IC3.x+)',actual:1},{dept:'Finance',band:'Manager M1.x',actual:1},{dept:'Finance',band:'Manager M2.x+',actual:1},
+  {dept:'Talent',band:'IC Entry (IC1.x)',actual:1},{dept:'Talent',band:'IC Mid (IC2.x)',actual:2},{dept:'Talent',band:'IC Senior (IC3.x+)',actual:1},{dept:'Talent',band:'Manager M1.x',actual:1},{dept:'Talent',band:'Manager M2.x+',actual:1}
+];
+let wpData=JSON.parse(JSON.stringify(defaultWP));
+
+function resetWPData(){wpData=JSON.parse(JSON.stringify(defaultWP));renderWPTable();renderWPSummary();renderRatioBars();}
+
+function deptTotal(dept){return wpData.filter(r=>r.dept===dept).reduce((s,r)=>s+r.actual,0);}
+
+function renderWPTable(){
+  const filter=document.getElementById('wp-dept-filter').value;
+  const rows=filter==='all'?wpData:wpData.filter(r=>r.dept===filter);
+  const tbody=document.getElementById('wp-tbody');
+  tbody.innerHTML='';
+  rows.forEach((row,i)=>{
+    const dt=deptTotal(row.dept)||1;
+    const bench=wpBenchmarks[row.band]||{bench:20};
+    const target=Math.round(bench.bench/100*dt);
+    const gap=row.actual-target;
+    let bc='ok',bl='On track',bs='✓';
+    if(gap<=-2){bc='crit';bl='Need '+Math.abs(gap)+' more';bs='▼';}
+    else if(gap<0){bc='warn';bl='Short by '+Math.abs(gap);bs='!';}
+    else if(gap>3){bc='over';bl='+'+gap+' above target';bs='▲';}
+    const origIdx=wpData.findIndex(r=>r.dept===row.dept&&r.band===row.band);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:500">${row.dept}</td><td>${row.band}</td><td><input type="number" min="0" max="999" value="${row.actual}" data-orig="${origIdx}" onchange="wpUpdate(this)" style="width:60px"></td><td style="color:var(--mid)">${bench.bench}%</td><td style="color:var(--mid)">${target}</td><td style="font-weight:600;color:${gap<0?'var(--red)':gap>3?'var(--mid)':'var(--green)'}">${gap>=0?'+':''}${gap}</td><td><span class="gbadge ${bc}">${bs} ${bl}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function wpUpdate(input){
+  const idx=parseInt(input.dataset.orig);
+  if(!isNaN(idx))wpData[idx].actual=parseInt(input.value)||0;
+  renderWPSummary();renderRatioBars();
+}
+function renderWPSummary(){
+  const total=wpData.reduce((s,r)=>s+r.actual,0);
+  const ic=wpData.filter(r=>r.band.startsWith('IC')).reduce((s,r)=>s+r.actual,0);
+  const mgr=wpData.filter(r=>r.band.startsWith('Manager')).reduce((s,r)=>s+r.actual,0);
+  const senior=wpData.filter(r=>r.band==='IC Senior (IC3.x+)').reduce((s,r)=>s+r.actual,0);
+  let gaps=0;
+  const dts={};wpData.forEach(r=>{if(!dts[r.dept])dts[r.dept]=0;dts[r.dept]+=r.actual;});
+  wpData.forEach(r=>{const t=Math.round((wpBenchmarks[r.band]?.bench||20)/100*(dts[r.dept]||1));if(r.actual<t)gaps+=t-r.actual;});
+  document.getElementById('wp-summary').innerHTML=`
+    <div class="wpc hl"><div class="wpc-label">Total headcount</div><div class="wpc-num">${total}</div><div class="wpc-sub">across all departments</div></div>
+    <div class="wpc"><div class="wpc-label">IC headcount</div><div class="wpc-num">${ic}</div><div class="wpc-sub">${total?Math.round(ic/total*100):0}% of total</div></div>
+    <div class="wpc"><div class="wpc-label">Manager headcount</div><div class="wpc-num">${mgr}</div><div class="wpc-sub">${total?Math.round(mgr/total*100):0}% of total</div></div>
+    <div class="wpc"><div class="wpc-label">Senior IC (IC3+)</div><div class="wpc-num">${senior}</div><div class="wpc-sub">${ic?Math.round(senior/ic*100):0}% of IC headcount</div></div>
+    <div class="wpc" style="${gaps>10?'border-color:var(--red)':''}"><div class="wpc-label">Leveling gaps</div><div class="wpc-num" style="${gaps>10?'color:var(--red)':''}">${gaps}</div><div class="wpc-sub">headcount below benchmark</div></div>`;
+
+  const insights=[];
+  const depts=[...new Set(wpData.map(r=>r.dept))];
+  depts.forEach(dept=>{
+    const dr=wpData.filter(r=>r.dept===dept),dt=deptTotal(dept);if(!dt)return;
+    dr.forEach(row=>{
+      const t=Math.round((wpBenchmarks[row.band]?.bench||20)/100*dt),g=row.actual-t;
+      if(g<=-2)insights.push({type:'crit',msg:`${dept} needs ${Math.abs(g)} more at ${row.band} (current ${row.actual}, target ${t})`});
+      if(g>=4)insights.push({type:'over',msg:`${dept} is ${g} above target at ${row.band} (current ${row.actual}, target ${t}) — consider rebalancing`});
+    });
+    const icR=dr.filter(r=>r.band.startsWith('IC')).reduce((s,r)=>s+r.actual,0);
+    const mR=dr.filter(r=>r.band.startsWith('Manager')).reduce((s,r)=>s+r.actual,0);
+    if(mR>0&&icR/mR<4)insights.push({type:'warn',msg:`${dept} has a low IC/Manager ratio (${icR}:${mR}). Leadership density may be too high for current team size.`});
+  });
+  document.getElementById('wp-insights').innerHTML=insights.length?insights.map(ins=>`<div style="padding:11px 14px;margin-bottom:8px;border-radius:var(--rs);font-size:13px;line-height:1.55;${ins.type==='crit'?'background:var(--red-light);border-left:3px solid var(--red)':ins.type==='over'?'background:var(--light);border-left:3px solid var(--mid)':'background:var(--amber-light);border-left:3px solid #c8a000'}">${ins.msg}</div>`).join(''):'<p style="font-size:13px;color:var(--mid)">No significant gaps detected. All departments tracking within benchmark ranges.</p>';
+}
+function renderRatioBars(){
+  const depts=[...new Set(wpData.map(r=>r.dept))];
+  const targetMgrPct=(wpBenchmarks['Manager M1.x'].bench+wpBenchmarks['Manager M2.x+'].bench);
+  document.getElementById('ratio-bars').innerHTML=depts.map(dept=>{
+    const dt=deptTotal(dept);if(!dt)return'';
+    const mP=Math.round(wpData.filter(r=>r.dept===dept&&r.band.startsWith('Manager')).reduce((s,r)=>s+r.actual,0)/dt*100);
+    return`<div class="rb-row"><span class="rb-label" title="${dept}">${dept}</span><div class="rb-track"><div class="rb-fill" style="width:${Math.min(mP,100)}%"><span>${mP>10?mP+'%':''}</span></div><div class="rb-target" style="left:${targetMgrPct}%"></div></div><span class="rb-stat">${mP}% mgr · ${100-mP}% IC <span style="color:var(--amber);font-size:9px">(target ${targetMgrPct}% mgr)</span></span></div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
