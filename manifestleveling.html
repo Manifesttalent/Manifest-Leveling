@@ -355,9 +355,7 @@ input[type=range]{width:100%;accent-color:var(--bk);cursor:pointer}
   <button class="ntab" onclick="sV('hiring',this)">Level Assessment</button>
   <button class="ntab" onclick="sV('ladder',this)">Level Ladder</button>
   <button class="ntab" onclick="sV('growth',this)">Growth Planning</button>
-  <button class="ntab" id="tab-people" onclick="requestPeople(this)">People Data</button>
-  <button class="ntab" onclick="sV('workforce',this)">Workforce Planning</button>
-  <button class="ntab" onclick="sV('comp',this)">Comp Benchmark</button>
+
 </div>
 
 <div class="main">
@@ -775,6 +773,11 @@ ss="view" id="view-workforce">
 <div class="footer">
   <div style="display:flex;align-items:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" style="display:inline-block;vertical-align:middle"><rect x="0" y="4" width="52" height="52" rx="5" fill="#CC2222"/><text x="26" y="46" font-family="Georgia,serif" font-size="40" font-weight="700" fill="white" text-anchor="middle">M</text><rect x="8" y="50" width="36" height="5" rx="1" fill="#111"/><text x="68" y="28" font-family="Georgia,serif" font-size="20" font-weight="700" fill="white" dominant-baseline="auto">Manifest</text><text x="68" y="52" font-family="Georgia,serif" font-size="20" fill="rgba(255,255,255,0.85)" dominant-baseline="auto">Global</text></svg></div>
   <p>Manifest Global · Internal use only</p>
+  <div style="display:flex;gap:16px;align-items:center">
+    <a href="#" onclick="requestPeople(null);return false;" style="font-size:11px;color:var(--md);text-decoration:none;letter-spacing:.05em;" onmouseover="this.style.color='#CC2222'" onmouseout="this.style.color='var(--md)'">People Data</a>
+    <a href="#" onclick="sV('workforce',null);return false;" style="font-size:11px;color:var(--md);text-decoration:none;letter-spacing:.05em;" onmouseover="this.style.color='#CC2222'" onmouseout="this.style.color='var(--md)'">Workforce Planning</a>
+    <a href="#" onclick="sV('comp',null);return false;" style="font-size:11px;color:var(--md);text-decoration:none;letter-spacing:.05em;" onmouseover="this.style.color='#CC2222'" onmouseout="this.style.color='var(--md)'">Comp Benchmark</a>
+  </div>
 </div>
 </div><!-- /app -->
 
@@ -1324,7 +1327,7 @@ function sV(v,btn){
   if(v==='workforce'&&!wfpUnlocked){pendWfpBtn=btn;showWfpGate();return;}
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.ntab').forEach(el=>el.classList.remove('active'));
-  document.getElementById('view-'+v).classList.add('active'); btn.classList.add('active');
+  document.getElementById('view-'+v).classList.add('active'); if(btn)btn.classList.add('active');
   if(v==='comp'){renderCompTable();}
   updateDeptContext();
 }
