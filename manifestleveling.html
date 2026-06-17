@@ -566,73 +566,9 @@ input[type=range]{width:100%;accent-color:var(--bk);cursor:pointer}
 
 
 
-<div cla<div class="eye" style="margin-top:4px">Division archetypes</div>
-<p style="font-size:12px;color:var(--md);margin-bottom:10px;line-height:1.5">Benchmarks are now set at <strong>division level</strong> — the same division can have a different target profile from the rest of its department.</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
-  <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:var(--r);background:#185fa522;border:1px solid #185fa544;max-width:260px"><span style="font-size:11px;font-weight:700;color:#185fa5;flex-shrink:0">A</span><div><div style="font-size:12px;color:#185fa5;font-weight:600">Execution &amp; Scale</div><div style="font-size:11px;color:var(--md)">Client Support, Finance Shared Services, Talent Ops, Student Placement Ops, Kaaiser Ops, Biz Ops, Marketing Ops &amp; Design</div></div></div>
-  <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:var(--r);background:#1a7a4a22;border:1px solid #1a7a4a44;max-width:260px"><span style="font-size:11px;font-weight:700;color:#1a7a4a;flex-shrink:0">B</span><div><div style="font-size:12px;color:#1a7a4a;font-weight:600">Specialist &amp; Craft</div><div style="font-size:11px;color:var(--md)">Engineering, Product, FP&amp;A, Financial Reporting, Content &amp; Digital Marketing, Talent Acquisition, Talent BP</div></div></div>
-  <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:var(--r);background:#8a6d0022;border:1px solid #8a6d0044;max-width:260px"><span style="font-size:11px;font-weight:700;color:#8a6d00;flex-shrink:0">C</span><div><div style="font-size:12px;color:#8a6d00;font-weight:600">Commercial &amp; Advisory</div><div style="font-size:11px;color:var(--md)">K-12 Client Partnerships, Explore Engagement &amp; Sales, Kaaiser Sales, Student Placement Counseling, Cialfo Sales</div></div></div>
-  <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:var(--r);background:#6b35b822;border:1px solid #6b35b844;max-width:260px"><span style="font-size:11px;font-weight:700;color:#6b35b8;flex-shrink:0">D</span><div><div style="font-size:12px;color:#6b35b8;font-weight:600">Leadership &amp; Strategy</div><div style="font-size:11px;color:var(--md)">CEO&apos;s Office, Strategic Ops, all Leadership divisions</div></div></div>
-</div>
-<div class="eye">IC / Manager ratio by department</div><div class="eye">IC / Manager ratio by department</div>
-<div id="rb-dept" style="margin-bottom:24px"></div>
 
-
-
-<div class="eye" style="margin-top:8px">Level distribution by department</div>
-<p style="font-size:13px;color:var(--md);margin-bottom:14px;line-height:1.55">Headcount pre-populated from live data. Each department is benchmarked against its archetype (Execution &amp; Ops, Specialist &amp; Technical, Commercial &amp; Senior, or Enabling). Use the sliders to model growth and AI adoption scenarios.</p>
-
-<div style="background:var(--lt);border-radius:var(--r);padding:18px 20px;margin-bottom:18px;border:1px solid var(--bd)">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="eye" style="margin-bottom:0">AI Maturity</div>
-      <span style="font-size:10px;padding:2px 8px;border-radius:3px;background:#CC2222;color:#fff;font-weight:600;letter-spacing:.06em">BETA</span>
-    </div>
-    <div style="font-size:12px;color:var(--md)" id="ai-note">No AI adjustment. Benchmarks reflect current best-practice ratios.</div>
-  </div>
-  <input type="range" min="0" max="100" step="10" value="0" id="ai-slider" oninput="setAIMaturity(this.value)" style="width:100%;accent-color:#CC2222;margin-bottom:8px">
-  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--md)">
-    <span>0% — No AI</span><span>25% — Early tools</span><span>50% — Adopted</span><span>75% — Scaled</span><span>100% — Full maturity</span>
-  </div>
-  <div style="margin-top:10px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500" id="ai-display">
-    <span style="color:var(--md)">AI level: <strong>0%</strong></span>
-  </div>
-</div>
-
-
-<div style="background:var(--lt);border-radius:var(--r);padding:18px 20px;margin-bottom:18px">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-    <div class="eye" style="margin-bottom:0">Team scale</div>
-    <div style="font-size:12px;color:var(--md)" id="scale-note">Current headcount. Targets reflect benchmark % of actuals.</div>
-  </div>
-  <input type="range" min="1" max="5" step="0.25" value="1" id="scale-slider" oninput="setScaleSlider(this.value)" style="width:100%;accent-color:var(--bk);margin-bottom:8px">
-  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--md)">
-    <span>1x (current)</span><span>2x</span><span>3x</span><span>4x</span><span>5x</span>
-  </div>
-  <div style="margin-top:10px;font-size:13px;font-weight:500" id="scale-display">Scale: 1.0x &nbsp;<span style="font-size:11px;color:var(--md);font-weight:400">— showing current headcount</span></div>
-</div>
-
-
-ss="view" id="view-workforce">
-<div class="wp-intro"><h3>Workforce planning: leveling health</h3><p>Live headcount data. Edits in People Data sync here in real time. Toggle team scale to model growth scenarios. Filter insights by department.</p></div>
-<div class="eye">Summary</div><div class="wp-sum" id="wp-sum"></div>
-
-
-
-<div class="pcontrols">
-  <select id="wp-df" onchange="updateWPDivFilter();renderWP()"><option value="all">All departments</option></select>
-  <select id="wp-divf" onchange="renderWP()"><option value="all">All divisions</option></select>
-  <button class="pb-btn" onclick="resetWP()">Reset to actual</button>
-  <button class="pb-btn pri" onclick="renderWP();renderWPSum();renderRBars()">Recalculate</button>
-</div>
-<div class="wptbl-wrap"><table class="wptbl"><thead><tr><th>Department</th><th>Level band</th><th>Actual</th><th>Benchmark %</th><th>Target</th><th>Gap</th><th>Status</th></tr></thead><tbody id="wptbody"></tbody></table></div>
-
-<div class="eye" style="margin-top:8px">Insights</div>
-<div class="pcontrols" style="margin-bottom:10px">
-  <select id="ins-f" onchange="renderInsights()"><option value="all">All departments</option></select>
-</div>
-<div id="wp-ins" style="margin-bottom:32px"></div>
 </div><!-- /workforce -->
+
 
 
 <div id="view-comp" class="view">
